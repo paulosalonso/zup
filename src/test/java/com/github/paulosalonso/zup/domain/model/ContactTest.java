@@ -16,28 +16,21 @@ public class ContactTest {
                 .build();
 
         Contact contact = Contact.of()
-                .id(ContactId.of()
-                        .customer(customer)
-                        .type(ContactType.EMAIL)
-                        .build())
+                .id(1L)
+                .customer(customer)
+                .type(ContactType.EMAIL)
                 .contact("mycontact@mail.com")
                 .build();
 
-        assertThat(contact.getId()).satisfies(id -> {
-            assertThat(id.getCustomer()).isEqualTo(customer);
-            assertThat(id.getType()).isEqualTo(ContactType.EMAIL);
-        });
+        assertThat(contact.getId()).isEqualTo(1L);
+        assertThat(contact.getCustomer()).isEqualTo(customer);
+        assertThat(contact.getType()).isEqualTo(ContactType.EMAIL);
         assertThat(contact.getContact()).isEqualTo("mycontact@mail.com");
     }
 
     @Test
     public void testEqualsAndHashCode() {
         EqualsVerifier.forClass(Contact.class)
-                .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
-                .usingGetClass()
-                .verify();
-
-        EqualsVerifier.forClass(ContactId.class)
                 .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
                 .usingGetClass()
                 .verify();
