@@ -11,6 +11,10 @@ public class ContactId {
 
     @Enumerated(EnumType.STRING)
     private ContactType type;
+    
+    public static Builder of() {
+        return new Builder();
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -40,5 +44,28 @@ public class ContactId {
     @Override
     public int hashCode() {
         return Objects.hash(customer, type);
+    }
+    
+    public static final class Builder {
+
+        private ContactId contactId;
+
+        private Builder() {
+            contactId = new ContactId();
+        }
+
+        public Builder customer(Customer customer) {
+            contactId.setCustomer(customer);
+            return this;
+        }
+
+        public Builder type (ContactType type) {
+            contactId.setType(type);
+            return this;
+        }
+
+        public ContactId build() {
+            return contactId;
+        }
     }
 }

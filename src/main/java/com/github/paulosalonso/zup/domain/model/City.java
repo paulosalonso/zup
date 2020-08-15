@@ -6,13 +6,15 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Entity
 public class City {
 
 	@Id
-    @Column(name = "ibge_code")
-    private String id;
+    private String ibgeCode;
 
     @NotBlank
     @Size(max = 30)
@@ -22,12 +24,16 @@ public class City {
     @Size(max = 2)
     private String state;
 
-    public String getId() {
-        return id;
+    public static Builder of() {
+        return new Builder();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getIbgeCode() {
+        return ibgeCode;
+    }
+
+    public void setIbgeCode(String ibgeCode) {
+        this.ibgeCode = ibgeCode;
     }
 
     public String getName() {
@@ -51,13 +57,41 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return Objects.equals(id, city.id) &&
+        return Objects.equals(ibgeCode, city.ibgeCode) &&
                 Objects.equals(name, city.name) &&
                 Objects.equals(state, city.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, state);
+        return Objects.hash(ibgeCode, name, state);
+    }
+    
+    public static final class Builder {
+
+        private City city;
+
+        private Builder() {
+            city = new City();
+        }
+
+        public Builder ibgeCode(String ibgeCode) {
+            city.setIbgeCode(ibgeCode);
+            return this;
+        }
+
+        public Builder name(String name) {
+            city.setName(name);
+            return this;
+        }
+
+        public Builder state(String state) {
+            city.setState(state);
+            return this;
+        }
+
+        public City build() {
+            return city;
+        }
     }
 }

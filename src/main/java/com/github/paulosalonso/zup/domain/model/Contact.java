@@ -30,6 +30,10 @@ public class Contact {
         this.contact = contact;
     }
 
+    public static Builder of() {
+        return new Builder();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,5 +46,28 @@ public class Contact {
     @Override
     public int hashCode() {
         return Objects.hash(id, contact);
+    }
+    
+    public static final class Builder {
+
+        private Contact contact;
+
+        private Builder() {
+            contact = new Contact();
+        }
+
+        public Builder id(ContactId id) {
+            contact.setId(id);
+            return this;
+        }
+
+        public Builder contact(String contact) {
+            this.contact.setContact(contact);
+            return this;
+        }
+
+        public Contact build() {
+            return contact;
+        }
     }
 }

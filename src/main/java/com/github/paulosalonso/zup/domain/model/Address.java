@@ -35,6 +35,10 @@ public class Address {
     @Column(name = "address_complement")
     private String complement;
 
+    public static Builder of() {
+        return new Builder();
+    }
+
     public City getCity() {
         return city;
     }
@@ -99,5 +103,48 @@ public class Address {
     @Override
     public int hashCode() {
         return Objects.hash(city, postalCode, street, number, district, complement);
+    }
+    
+    public static final class Builder {
+
+        private final Address address;
+
+        private Builder() {
+            this.address = new Address();
+        }
+
+        public Builder city(City city) {
+            address.setCity(city);
+            return this;
+        }
+
+        public Builder postalCode(String postalCode) {
+            address.setPostalCode(postalCode);
+            return this;
+        }
+
+        public Builder street(String street) {
+            address.setStreet(street);
+            return this;
+        }
+
+        public Builder number(String number) {
+            address.setNumber(number);
+            return this;
+        }
+
+        public Builder district(String district) {
+            address.setDistrict(district);
+            return this;
+        }
+
+        public Builder complement(String complement) {
+            address.setComplement(complement);
+            return this;
+        }
+
+        public Address build() {
+            return address;
+        }
     }
 }
