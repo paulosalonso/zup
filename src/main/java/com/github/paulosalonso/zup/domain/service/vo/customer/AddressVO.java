@@ -4,7 +4,7 @@ import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
 
 public class AddressVO {
 
-    private CityVO city;
+    private CityVO cityVO;
     private String postalCode;
     private String street;
     private String number;
@@ -16,7 +16,7 @@ public class AddressVO {
     }
 
     public CityVO getCity() {
-        return city;
+        return cityVO;
     }
 
     public String getPostalCode() {
@@ -47,8 +47,8 @@ public class AddressVO {
             addressVO = new AddressVO();
         }
 
-        public Builder city(CityVO city) {
-            addressVO.city = city;
+        public Builder city(CityVO cityVO) {
+            addressVO.cityVO = cityVO;
             return this;
         }
 

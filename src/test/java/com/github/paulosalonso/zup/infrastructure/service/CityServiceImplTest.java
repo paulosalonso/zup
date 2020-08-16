@@ -7,7 +7,6 @@ import com.github.paulosalonso.zup.domain.service.vo.PageVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CitySearchVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityUpdateVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
-import com.github.paulosalonso.zup.infrastructure.service.page.PageableBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -123,12 +122,12 @@ public class CityServiceImplTest {
 
     @Test
     public void whenCreateThenReturnCity() {
-        CityVO cityToCreate = buildCityVO("");
+        CityVO cityVOToCreate = buildCityVO("");
         City createdCity = buildCity("");
 
         when(cityRepository.save(createdCity)).thenReturn(createdCity);
 
-        CityVO cityVO = cityService.create(cityToCreate);
+        CityVO cityVO = cityService.create(cityVOToCreate);
 
         assertCityVO(cityVO, "");
 
@@ -170,10 +169,10 @@ public class CityServiceImplTest {
                 .state("state-updated")
                 .build();
 
-        CityVO updatedCity = cityService.update("ibge-code", cityToUpdate);
-        assertThat(updatedCity.getIbgeCode()).isEqualTo("ibge-code");
-        assertThat(updatedCity.getName()).isEqualTo("name-updated");
-        assertThat(updatedCity.getState()).isEqualTo("state-updated");
+        CityVO updatedCityVO = cityService.update("ibge-code", cityToUpdate);
+        assertThat(updatedCityVO.getIbgeCode()).isEqualTo("ibge-code");
+        assertThat(updatedCityVO.getName()).isEqualTo("name-updated");
+        assertThat(updatedCityVO.getState()).isEqualTo("state-updated");
 
         verify(cityRepository).findById("ibge-code");
     }

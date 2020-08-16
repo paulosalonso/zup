@@ -1,10 +1,8 @@
 package com.github.paulosalonso.zup.domain.mapper;
 
 import com.github.paulosalonso.zup.domain.model.City;
-import com.github.paulosalonso.zup.domain.service.mapper.CityMapper;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityUpdateVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.github.paulosalonso.zup.domain.service.mapper.CityMapper.*;

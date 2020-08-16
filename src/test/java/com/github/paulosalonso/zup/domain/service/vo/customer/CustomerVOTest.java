@@ -2,7 +2,6 @@ package com.github.paulosalonso.zup.domain.service.vo.customer;
 
 import com.github.paulosalonso.zup.domain.model.Gender;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -27,7 +26,7 @@ public class CustomerVOTest {
                 .postalCode("postal-code")
                 .build();
 
-        CustomerVO customerVO = CustomerVO.of()
+        CustomerVO customerVO = com.github.paulosalonso.zup.domain.service.vo.customer.CustomerVO.of()
                 .id(1L)
                 .name("name")
                 .address(address)

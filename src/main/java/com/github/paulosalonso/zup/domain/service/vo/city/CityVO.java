@@ -23,29 +23,29 @@ public class CityVO {
 
     public static final class Builder {
 
-        private CityVO city;
+        private CityVO cityVO;
 
         private Builder() {
-            city = new CityVO();
+            cityVO = new CityVO();
         }
 
         public Builder ibgeCode(String ibgeCode) {
-            city.ibgeCode = ibgeCode;
+            cityVO.ibgeCode = ibgeCode;
             return this;
         }
 
         public Builder name(String name) {
-            city.name = name;
+            cityVO.name = name;
             return this;
         }
 
         public Builder state(String state) {
-            city.state = state;
+            cityVO.state = state;
             return this;
         }
 
         public CityVO build() {
-            return city;
+            return cityVO;
         }
     }
 }

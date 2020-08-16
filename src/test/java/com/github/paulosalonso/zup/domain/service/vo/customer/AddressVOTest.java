@@ -9,14 +9,14 @@ public class AddressVOTest {
 
     @Test
     public void whenBuildAddressVOThenSuccess() {
-        CityVO city = CityVO.of()
+        CityVO cityVO = CityVO.of()
                 .ibgeCode("ibge-code")
                 .name("name")
                 .state("state")
                 .build();
 
         AddressVO addressVO = AddressVO.of()
-                .city(city)
+                .city(cityVO)
                 .street("street")
                 .number("number")
                 .complement("complement")
@@ -24,7 +24,7 @@ public class AddressVOTest {
                 .postalCode("postal-code")
                 .build();
 
-        assertThat(addressVO.getCity()).isSameAs(city);
+        assertThat(addressVO.getCity()).isSameAs(cityVO);
         assertThat(addressVO.getStreet()).isEqualTo("street");
         assertThat(addressVO.getNumber()).isEqualTo("number");
         assertThat(addressVO.getComplement()).isEqualTo("complement");
