@@ -6,7 +6,7 @@ import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
 
 public interface CityMapper {
 
-    static City cityVoToCityEntity(CityVO cityVO) {
+    static City cityVOToCityEntity(CityVO cityVO) {
         return City.of()
                 .ibgeCode(cityVO.getIbgeCode())
                 .name(cityVO.getName())

@@ -42,7 +42,7 @@ public class CityServiceImpl implements CityService {
     @Override
     @Transactional
     public CityVO create(CityVO cityVO) {
-        City city = cityVoToCityEntity(cityVO);
+        City city = cityVOToCityEntity(cityVO);
         city = cityRepository.save(city);
         return cityEntityToCityVO(city);
     }

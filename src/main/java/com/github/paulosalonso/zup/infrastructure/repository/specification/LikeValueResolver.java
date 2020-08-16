@@ -9,7 +9,7 @@ public final class LikeValueResolver {
     }
 
     public static String endsWith(String value) {
-        return String.format("%%%s%", value);
+        return String.format("%%%s", value);
     }
 
     public static String contains(String value) {
