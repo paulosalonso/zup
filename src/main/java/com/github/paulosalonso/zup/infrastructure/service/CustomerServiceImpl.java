@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.github.paulosalonso.zup.domain.service.mapper.CustomerMapper.*;
 import static com.github.paulosalonso.zup.infrastructure.repository.specification.CustomerSpecificationFactory.findByCustomerSearch;
-import static com.github.paulosalonso.zup.infrastructure.service.page.PageBuilder.buildPage;
+import static com.github.paulosalonso.zup.infrastructure.service.page.PageBuilder.buildPageVO;
 import static com.github.paulosalonso.zup.infrastructure.service.page.PageableBuilder.buildPageable;
 
 @Service
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
         Page<Customer> page = customerRepository.findAll(
                 findByCustomerSearch(searchCriteria), buildPageable(searchCriteria));
 
-        return buildPage(page, CustomerMapper::customerEntityToCustomerVO);
+        return buildPageVO(page, CustomerMapper::customerEntityToCustomerVO);
     }
 
     @Override

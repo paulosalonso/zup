@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.github.paulosalonso.zup.domain.service.mapper.CityMapper.*;
 import static com.github.paulosalonso.zup.infrastructure.integration.viacep.ViaCEP.getCepInfo;
-import static com.github.paulosalonso.zup.infrastructure.service.page.PageBuilder.buildPage;
+import static com.github.paulosalonso.zup.infrastructure.service.page.PageBuilder.buildPageVO;
 import static com.github.paulosalonso.zup.infrastructure.service.page.PageableBuilder.buildPageable;
 import static com.github.paulosalonso.zup.infrastructure.repository.specification.CitySpecificationFactory.findByCitySearch;
 
@@ -36,12 +36,17 @@ public class CityServiceImpl implements CityService {
         Page<City> page = cityRepository.findAll(
                 findByCitySearch(searchCriteria), buildPageable(searchCriteria));
 
-        return buildPage(page, CityMapper::cityEntityToCityVO);
+        return buildPageVO(page, CityMapper::cityEntityToCityVO);
     }
 
     @Override
     @Transactional
     public CityVO create(CityVO cityVO) {
+        if (cityRepository.existsById(cityVO.getIbgeCode())) {
+            throw new CreateException(String.format(
+                    "City with ibge code %s already exists.", cityVO.getIbgeCode()));
+        }
+
         City city = cityVOToCityEntity(cityVO);
         city = cityRepository.save(city);
         return cityEntityToCityVO(city);

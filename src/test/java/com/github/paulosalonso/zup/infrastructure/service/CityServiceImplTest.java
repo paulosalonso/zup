@@ -2,6 +2,7 @@ package com.github.paulosalonso.zup.infrastructure.service;
 
 import com.github.paulosalonso.zup.domain.model.City;
 import com.github.paulosalonso.zup.domain.repository.CityRepository;
+import com.github.paulosalonso.zup.domain.service.exception.CreateException;
 import com.github.paulosalonso.zup.domain.service.exception.NotFoundException;
 import com.github.paulosalonso.zup.domain.service.vo.PageVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CitySearchVO;
@@ -135,6 +136,21 @@ public class CityServiceImplTest {
         verify(cityRepository).save(cityCaptor.capture());
         City cityArgument = cityCaptor.getValue();
         assertThat(cityArgument).isEqualTo(createdCity);
+    }
+
+    @Test
+    public void whenCreateWithExistentIbgecodeThenThrowsCreateException() {
+        CityVO cityVOToCreate = buildCityVO("");
+
+        when(cityRepository.existsById(cityVOToCreate.getIbgeCode())).thenReturn(true);
+
+        assertThatThrownBy(() -> cityService.create(cityVOToCreate))
+                .isExactlyInstanceOf(CreateException.class)
+                .hasMessage(String.format(
+                        "City with ibge code %s already exists.", cityVOToCreate.getIbgeCode()));
+
+        verify(cityRepository).existsById(cityVOToCreate.getIbgeCode());
+        verifyNoMoreInteractions(cityRepository);
     }
 
     @Test

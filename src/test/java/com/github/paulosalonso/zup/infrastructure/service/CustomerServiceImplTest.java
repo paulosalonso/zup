@@ -158,7 +158,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void whenReadThenReturnCity() {
+    public void whenReadThenReturnCustomer() {
         when(customerRepository.findById(1L))
                 .thenReturn(Optional.of(buildCustomerById(1L, "")));
 
