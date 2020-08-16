@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.github.paulosalonso.zup.domain.service.mapper.CityMapper.*;
 import static com.github.paulosalonso.zup.infrastructure.integration.viacep.ViaCEP.getCepInfo;
-import static com.github.paulosalonso.zup.infrastructure.page.PageBuilder.buildPage;
-import static com.github.paulosalonso.zup.infrastructure.page.PageableBuilder.buildPageable;
+import static com.github.paulosalonso.zup.infrastructure.service.page.PageBuilder.buildPage;
+import static com.github.paulosalonso.zup.infrastructure.service.page.PageableBuilder.buildPageable;
 import static com.github.paulosalonso.zup.infrastructure.repository.specification.CitySpecificationFactory.findByCitySearch;
 
 @Service

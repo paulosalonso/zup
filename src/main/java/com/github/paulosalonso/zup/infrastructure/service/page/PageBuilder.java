@@ -1,4 +1,4 @@
-package com.github.paulosalonso.zup.infrastructure.page;
+package com.github.paulosalonso.zup.infrastructure.service.page;
 
 import com.github.paulosalonso.zup.domain.service.vo.PageVO;
 import org.springframework.data.domain.Page;
