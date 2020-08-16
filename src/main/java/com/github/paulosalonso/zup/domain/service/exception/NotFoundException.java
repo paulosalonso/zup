@@ -1,0 +1,13 @@
+package com.github.paulosalonso.zup.domain.service.exception;
+
+public class NotFoundException extends CrudException {
+    public NotFoundException() {}
+
+    public NotFoundException(String message) {
+        super(message);
+    }
+
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
