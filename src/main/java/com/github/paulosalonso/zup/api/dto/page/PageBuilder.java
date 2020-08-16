@@ -1,5 +1,6 @@
-package com.github.paulosalonso.zup.infrastructure.service.page;
+package com.github.paulosalonso.zup.api.dto.page;
 
+import com.github.paulosalonso.zup.api.dto.PageDTO;
 import com.github.paulosalonso.zup.domain.service.vo.PageVO;
 import org.springframework.data.domain.Page;
 
@@ -9,12 +10,12 @@ import static java.util.stream.Collectors.toList;
 
 public interface PageBuilder {
 
-    static <I, O> PageVO<O> buildPageVO(Page<I> page, Function<I, O> mapper) {
-        return PageVO.of()
-                .page(page.getNumber())
-                .pageSize(page.getNumberOfElements())
+    static <I, O> PageDTO<O> buildPageDTO(PageVO<I> page, Function<I, O> mapper) {
+        return PageDTO.of()
+                .page(page.getPage())
+                .pageSize(page.getPageSize())
                 .totalPages(page.getTotalPages())
-                .totalSize(Long.valueOf(page.getTotalElements()).intValue())
+                .totalSize(page.getTotalSize())
                 .content(page.getContent()
                         .stream()
                         .map(mapper)
