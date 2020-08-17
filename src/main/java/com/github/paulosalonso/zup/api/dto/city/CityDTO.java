@@ -6,8 +6,13 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("City")
 public class CityDTO {
 
+    @ApiModelProperty(example = "3550308", required = true)
     private String ibgeCode;
+
+    @ApiModelProperty(example = "São Paulo")
     private String name;
+
+    @ApiModelProperty(example = "SP")
     private String state;
 
     public static Builder of() {
