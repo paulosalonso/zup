@@ -14,12 +14,12 @@ public class AddressDTO {
 
     private CityDTO city;
 
-    @ApiModelProperty(example = "00000000")
+    @ApiModelProperty(example = "00000000", required = true)
     @NotNull
     @Pattern(regexp = "[0-9]{8}")
     private String postalCode;
 
-    @ApiModelProperty(example = "Rua A")
+    @ApiModelProperty(example = "Rua A", required = true)
     @NotBlank
     @Size(max = 100)
     private String street;
