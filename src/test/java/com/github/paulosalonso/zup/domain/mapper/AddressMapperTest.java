@@ -75,4 +75,24 @@ public class AddressMapperTest {
         assertThat(address.getDistrict()).isEqualTo("district");
         assertThat(address.getPostalCode()).isEqualTo("postal-code");
     }
+
+    @Test
+    public void whenMapAddressVOToAddressEntityWithoutCityThenSuccess() {
+        AddressVO addressVO = AddressVO.of()
+                .street("street")
+                .number("number")
+                .complement("complement")
+                .district("district")
+                .postalCode("postal-code")
+                .build();
+
+        Address address = addressVOToAddressEntity(addressVO);
+
+        assertThat(address.getCity()).isNull();
+        assertThat(address.getStreet()).isEqualTo("street");
+        assertThat(address.getNumber()).isEqualTo("number");
+        assertThat(address.getComplement()).isEqualTo("complement");
+        assertThat(address.getDistrict()).isEqualTo("district");
+        assertThat(address.getPostalCode()).isEqualTo("postal-code");
+    }
 }

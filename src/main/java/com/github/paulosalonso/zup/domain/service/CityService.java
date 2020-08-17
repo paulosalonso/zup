@@ -8,5 +8,6 @@ import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
 public interface CityService extends SearchService<CityVO, CitySearchVO>, CreateService<CityVO, CityVO>,
         ReadService<CityVO, String>, UpdateService<String, CityUpdateVO, CityVO>, DeleteService<String> {
 
+    CityVO findCityByPostalCode(String postalCode);
     CityVO createCityByPostalCode(String postalCode);
 }

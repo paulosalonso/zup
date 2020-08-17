@@ -81,6 +81,12 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    public CityVO findCityByPostalCode(String postalCode) {
+        PostalCodeInfo postalCodeInfo = getCepInfo(postalCode);
+        return read(postalCodeInfo.getIbgeCode());
+    }
+
+    @Override
     public CityVO createCityByPostalCode(String postalCode) {
         try {
             PostalCodeInfo postalCodeInfo = getCepInfo(postalCode);

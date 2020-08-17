@@ -1,0 +1,92 @@
+package com.github.paulosalonso.zup.api.dto.customer;
+
+import com.github.paulosalonso.zup.domain.model.Gender;
+import io.swagger.annotations.ApiModel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+
+@ApiModel("CustomerCreate")
+public class CustomerCreateDTO {
+
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String cpf;
+
+    @NotNull
+    private Gender gender;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate birthDate;
+
+    @Valid
+    private AddressDTO address;
+
+    public static Builder of() {
+        return new Builder();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public AddressDTO getAddress() {
+        return address;
+    }
+
+    public static final class Builder {
+
+        private final CustomerCreateDTO customerCreateDTO;
+
+        private Builder() {
+            customerCreateDTO = new CustomerCreateDTO();
+        }
+
+        public Builder name(String name) {
+            customerCreateDTO.name = name;
+            return this;
+        }
+
+        public Builder cpf(String cpf) {
+            customerCreateDTO.cpf = cpf;
+            return this;
+        }
+
+        public Builder gender(Gender gender) {
+            customerCreateDTO.gender = gender;
+            return this;
+        }
+
+        public Builder birthDate(LocalDate birthDate) {
+            customerCreateDTO.birthDate = birthDate;
+            return this;
+        }
+
+        public Builder address(AddressDTO address) {
+            customerCreateDTO.address = address;
+            return this;
+        }
+
+        public CustomerCreateDTO build() {
+            return customerCreateDTO;
+        }
+
+    }
+}

@@ -28,7 +28,7 @@ public abstract class PageableBuilder {
     }
 
     private static Order buildOrder(String order) {
-        String[] orderParams = order.split(",");
+        String[] orderParams = order.split("\\.");
 
         if (orderParams.length > 1 && orderParams[1].equals(DESC)) {
             return Order.desc(orderParams[0]);

@@ -1,21 +1,17 @@
-package com.github.paulosalonso.zup.domain.model;
+package com.github.paulosalonso.zup.api.dto.customer;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import com.github.paulosalonso.zup.api.dto.city.CityDTO;
+import io.swagger.annotations.ApiModel;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
-@Embeddable
-public class Address {
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    City city;
+@ApiModel("Address")
+public class AddressDTO {
+    
+    private CityDTO city;
 
     @NotNull
     @Pattern(regexp = "[0-9]{8}")
@@ -26,25 +22,23 @@ public class Address {
     private String street;
 
     @Size(max = 20)
-    @Column(name = "address_number")
     private String number;
 
     @Size(max = 60)
     private String district;
 
     @Size(max = 60)
-    @Column(name = "address_complement")
     private String complement;
 
     public static Builder of() {
         return new Builder();
     }
 
-    public City getCity() {
+    public CityDTO getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(CityDTO city) {
         this.city = city;
     }
 
@@ -88,64 +82,47 @@ public class Address {
         this.complement = complement;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(city, address.city) &&
-                Objects.equals(postalCode, address.postalCode) &&
-                Objects.equals(street, address.street) &&
-                Objects.equals(number, address.number) &&
-                Objects.equals(district, address.district) &&
-                Objects.equals(complement, address.complement);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(city, postalCode, street, number, district, complement);
-    }
-    
     public static final class Builder {
 
-        private final Address address;
+        private final AddressDTO addressDTO;
 
         private Builder() {
-            this.address = new Address();
+            addressDTO = new AddressDTO();
         }
 
-        public Builder city(City city) {
-            address.setCity(city);
+        public Builder city(CityDTO cityVO) {
+            addressDTO.city = cityVO;
             return this;
         }
 
         public Builder postalCode(String postalCode) {
-            address.setPostalCode(postalCode);
+            addressDTO.postalCode = postalCode;
             return this;
         }
 
         public Builder street(String street) {
-            address.setStreet(street);
+            addressDTO.street = street;
             return this;
         }
 
         public Builder number(String number) {
-            address.setNumber(number);
+            addressDTO.number = number;
             return this;
         }
 
         public Builder district(String district) {
-            address.setDistrict(district);
+            addressDTO.district = district;
             return this;
         }
 
         public Builder complement(String complement) {
-            address.setComplement(complement);
+            addressDTO.complement = complement;
             return this;
         }
 
-        public Address build() {
-            return address;
+        public AddressDTO build() {
+            return addressDTO;
         }
+
     }
 }

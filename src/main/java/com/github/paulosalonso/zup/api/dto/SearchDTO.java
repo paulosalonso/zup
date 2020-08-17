@@ -13,7 +13,7 @@ public class SearchDTO {
     private int page = 0;
     @ApiModelProperty("Number of records per page. The default value is 100.")
     private int size = 100;
-    @ApiModelProperty("Fields to order the query result. The expected pattern is property,orderType (e.g. name,asc).")
+    @ApiModelProperty("Fields to order the query result. The expected pattern is property.orderType (e.g. name.asc).")
     private List<String> order = emptyList();
 
     public int getPage() {

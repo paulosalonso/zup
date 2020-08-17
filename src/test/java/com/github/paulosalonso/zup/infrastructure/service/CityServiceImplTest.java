@@ -82,7 +82,7 @@ public class CityServiceImplTest {
         CitySearchVO citySearchVO = CitySearchVO.of()
                 .page(1)
                 .size(20)
-                .order(List.of("name,desc"))
+                .order(List.of("name.desc"))
                 .build();
 
         when(cityRepository.findAll(any(Specification.class), any(Pageable.class)))
@@ -104,7 +104,7 @@ public class CityServiceImplTest {
         CitySearchVO citySearchVO = CitySearchVO.of()
                 .page(1)
                 .size(20)
-                .order(List.of("name,xxx"))
+                .order(List.of("name.xxx"))
                 .build();
 
         when(cityRepository.findAll(any(Specification.class), any(Pageable.class)))
