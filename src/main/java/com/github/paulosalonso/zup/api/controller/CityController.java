@@ -37,7 +37,7 @@ public class CityController {
     @ApiOperation("City search")
     @GetMapping
     public PageDTO<CityDTO> search(CitySearchDTO citySearchDTO) {
-        PageVO<CityVO> page = cityService.search(CityMapper.citySearchDTOToCitySearchVO(citySearchDTO));
+        PageVO<CityVO> page = cityService.search(citySearchDTOToCitySearchVO(citySearchDTO));
         return buildPageDTO(page, CityMapper::cityVOToCityDTO);
     }
 

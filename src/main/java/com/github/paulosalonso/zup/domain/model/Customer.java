@@ -1,7 +1,9 @@
 package com.github.paulosalonso.zup.domain.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -16,13 +18,17 @@ public class Customer {
     private String name;
 
     @NotBlank
+    @Column(unique = true)
     private String cpf;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private LocalDate birthDate;
 
+    @Valid
+    @NotNull
     @Embedded
     private Address address;
 

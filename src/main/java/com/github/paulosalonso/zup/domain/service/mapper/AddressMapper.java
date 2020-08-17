@@ -1,6 +1,7 @@
 package com.github.paulosalonso.zup.domain.service.mapper;
 
 import com.github.paulosalonso.zup.domain.model.Address;
+import com.github.paulosalonso.zup.domain.model.City;
 import com.github.paulosalonso.zup.domain.service.vo.customer.AddressVO;
 
 import static com.github.paulosalonso.zup.domain.service.mapper.CityMapper.cityEntityToCityVO;
@@ -20,8 +21,14 @@ public interface AddressMapper {
     }
 
     static Address addressVOToAddressEntity(AddressVO addressVO) {
+        City city = null;
+
+        if (addressVO.getCity() != null) {
+            city = cityVOToCityEntity(addressVO.getCity());
+        }
+
         return Address.of()
-                .city(cityVOToCityEntity(addressVO.getCity()))
+                .city(city)
                 .street(addressVO.getStreet())
                 .number(addressVO.getNumber())
                 .complement(addressVO.getComplement())

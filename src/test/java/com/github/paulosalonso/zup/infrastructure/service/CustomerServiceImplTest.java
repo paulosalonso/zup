@@ -5,6 +5,7 @@ import com.github.paulosalonso.zup.domain.model.City;
 import com.github.paulosalonso.zup.domain.model.Customer;
 import com.github.paulosalonso.zup.domain.model.Gender;
 import com.github.paulosalonso.zup.domain.repository.CustomerRepository;
+import com.github.paulosalonso.zup.domain.service.exception.CreateException;
 import com.github.paulosalonso.zup.domain.service.exception.NotFoundException;
 import com.github.paulosalonso.zup.domain.service.vo.PageVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
@@ -15,6 +16,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -85,7 +87,7 @@ public class CustomerServiceImplTest {
         CustomerSearchVO customerSearchVO = CustomerSearchVO.of()
                 .page(1)
                 .size(20)
-                .order(List.of("name,desc"))
+                .order(List.of("name.desc"))
                 .build();
 
         when(customerRepository.findAll(any(Specification.class), any(Pageable.class)))
@@ -107,7 +109,7 @@ public class CustomerServiceImplTest {
         CustomerSearchVO customerSearchVO = CustomerSearchVO.of()
                 .page(1)
                 .size(20)
-                .order(List.of("name,xxx"))
+                .order(List.of("name.xxx"))
                 .build();
 
         when(customerRepository.findAll(any(Specification.class), any(Pageable.class)))
@@ -155,6 +157,29 @@ public class CustomerServiceImplTest {
         assertCustomerVO(customerVO, 1L, "");
 
         verify(customerRepository).save(customerToCreate);
+    }
+
+    @Test
+    public void whenCreateCustomerDuplicatedCpfThenThrowsCreateException() {
+        CustomerCreateVO customerCreateVO = CustomerCreateVO.of()
+                .address(AddressVO.of()
+                        .city(CityVO.of().build())
+                        .build())
+                .cpf("cpf")
+                .build();
+
+        Customer customerToCreate = Customer.of()
+                .address(Address.of()
+                        .city(City.of().build())
+                        .build())
+                .cpf("cpf")
+                .build();
+
+        when(customerRepository.save(customerToCreate)).thenThrow(DataIntegrityViolationException.class);
+
+        assertThatThrownBy(() -> customerService.create(customerCreateVO))
+                .isExactlyInstanceOf(CreateException.class)
+                .hasMessage("There is already a customer with this cpf");
     }
 
     @Test

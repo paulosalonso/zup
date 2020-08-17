@@ -25,8 +25,8 @@
 
 		<skip.unit.tests>false</skip.unit.tests>
 		<skip.it.tests>false</skip.it.tests>
-		<line.coverage>0.1</line.coverage>
-		<branch.coverage>0.1</branch.coverage>
+		<line.coverage>0.9</line.coverage>
+		<branch.coverage>0.9</branch.coverage>
 	</properties>
 
 	<dependencies>
@@ -74,6 +74,10 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
 		<!--	TESTS DEPENDENCIES	-->
@@ -191,6 +195,11 @@
 						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>com/github/paulosalonso/zup/api/exceptionhandler/**/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -28,6 +28,14 @@ public interface CityMapper {
                 .build();
     }
 
+    static CityVO cityDTOToCityVO(CityDTO cityDTO) {
+        return CityVO.of()
+                .ibgeCode(cityDTO.getIbgeCode())
+                .name(cityDTO.getName())
+                .state(cityDTO.getState())
+                .build();
+    }
+
     static CityVO cityCreateDTOToCityVO(CityCreateDTO cityCreateDTO) {
         return CityVO.of()
                 .ibgeCode(cityCreateDTO.getIbgeCode())

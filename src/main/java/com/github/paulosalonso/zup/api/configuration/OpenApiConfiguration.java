@@ -1,4 +1,4 @@
-package com.github.paulosalonso.zup.api.openapi;
+package com.github.paulosalonso.zup.api.configuration;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +41,8 @@ public class OpenApiConfiguration implements WebMvcConfigurer {
 
     private void addTags(Docket docket) {
         docket
-                .tags(new Tag("Cities", "Cities Operations"));
+                .tags(new Tag("Cities", "Cities Operations"))
+                .tags(new Tag("Customers", "Customers Operations"));
     }
 
     private ApiInfo buildApiInfo() {

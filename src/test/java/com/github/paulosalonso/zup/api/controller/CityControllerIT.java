@@ -155,7 +155,7 @@ public class CityControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .queryParam("size", 1)
-                .queryParam("order", "name")
+                .queryParam("order", "name.desc")
                 .when()
                 .get("/cities")
                 .then()
@@ -164,9 +164,9 @@ public class CityControllerIT extends BaseIT {
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(2))
                 .body("totalSize", equalTo(2))
-                .body("content.ibgeCode", hasItems("4209102"))
-                .body("content.name", hasItems("Joinville"))
-                .body("content.state", hasItems("SC"));
+                .body("content.ibgeCode", hasItems("3550308"))
+                .body("content.name", hasItems("São Paulo"))
+                .body("content.state", hasItems("SP"));
     }
 
     @Test
@@ -286,7 +286,7 @@ public class CityControllerIT extends BaseIT {
     }
 
     @Test
-    public void whenReadNonExistentCityThenReturnOk() {
+    public void whenReadNonExistentCityThenReturnNotFound() {
         given()
                 .contentType(JSON)
                 .accept(JSON)

@@ -1,8 +1,6 @@
 package com.github.paulosalonso.zup.domain.service.exception;
 
 public class CreateException extends CrudException {
-    public CreateException() {}
-
     public CreateException(String message) {
         super(message);
     }
