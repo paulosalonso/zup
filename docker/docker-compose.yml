@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  zup:
+    image: paulosalonso/zup:latest
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/zup?useSSL=false&suseTimezone=true&serverTimezone=UTC
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - /home/paulo/Documentos/Docker-Compose/Postgres:/var/lib/postgresql/data 
+    networks:
+      - postgres
+      
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "paulo_alonso_@hotmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+
+networks: 
+  postgres:
+    driver: bridge
