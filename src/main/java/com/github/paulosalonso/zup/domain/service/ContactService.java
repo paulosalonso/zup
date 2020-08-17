@@ -10,8 +10,10 @@ import com.github.paulosalonso.zup.domain.service.vo.contact.ContactVO;
 
 import java.util.List;
 
-public interface ContactService extends CreateService<ContactCreateVO, ContactVO>, ReadService<ContactVO, Long>,
-        UpdateService<Long, ContactUpdateVO, ContactVO>, DeleteService<Long> {
+public interface ContactService extends CreateService<ContactCreateVO, ContactVO> {
 
     List<ContactVO> findByCustomerId(Long customerId);
+    ContactVO read(Long customerId, Long contactId);
+    ContactVO update(Long customerId, Long contactId, ContactUpdateVO contactUpdateVO);
+    void delete(Long customerId, Long contactId);
 }

@@ -1,14 +1,12 @@
 package com.github.paulosalonso.zup.infrastructure.service;
 
 import com.github.paulosalonso.zup.domain.model.Address;
-import com.github.paulosalonso.zup.domain.model.City;
 import com.github.paulosalonso.zup.domain.model.Customer;
 import com.github.paulosalonso.zup.domain.repository.CustomerRepository;
 import com.github.paulosalonso.zup.domain.service.CityService;
 import com.github.paulosalonso.zup.domain.service.CustomerService;
 import com.github.paulosalonso.zup.domain.service.exception.CreateException;
 import com.github.paulosalonso.zup.domain.service.exception.NotFoundException;
-import com.github.paulosalonso.zup.domain.service.mapper.CityMapper;
 import com.github.paulosalonso.zup.domain.service.mapper.CustomerMapper;
 import com.github.paulosalonso.zup.domain.service.vo.PageVO;
 import com.github.paulosalonso.zup.domain.service.vo.city.CityVO;
@@ -92,13 +90,23 @@ public class CustomerServiceImpl implements CustomerService {
         CityVO city;
 
         if (address.getCity() == null) {
+            city = getCityByPostalCode(address.getPostalCode());
+        } else {
             try {
-                city = cityService.findCityByPostalCode(address.getPostalCode());
+                city = cityService.read(address.getCity().getIbgeCode());
             } catch (NotFoundException e) {
-                city = cityService.createCityByPostalCode(address.getPostalCode());
+                city = getCityByPostalCode(address.getPostalCode());
             }
+        }
 
-            address.setCity(cityVOToCityEntity(city));
+        address.setCity(cityVOToCityEntity(city));
+    }
+
+    private CityVO getCityByPostalCode(String postalCode) {
+        try {
+            return cityService.findCityByPostalCode(postalCode);
+        } catch (NotFoundException e) {
+            return cityService.createCityByPostalCode(postalCode);
         }
     }
 }

@@ -5,6 +5,7 @@ import com.github.paulosalonso.zup.domain.model.City;
 import com.github.paulosalonso.zup.domain.model.Customer;
 import com.github.paulosalonso.zup.domain.model.Gender;
 import com.github.paulosalonso.zup.domain.repository.CustomerRepository;
+import com.github.paulosalonso.zup.domain.service.CityService;
 import com.github.paulosalonso.zup.domain.service.exception.CreateException;
 import com.github.paulosalonso.zup.domain.service.exception.NotFoundException;
 import com.github.paulosalonso.zup.domain.service.vo.PageVO;
@@ -43,6 +44,9 @@ public class CustomerServiceImplTest {
 
     @Mock
     private CustomerRepository customerRepository;
+
+    @Mock
+    private CityService cityService;
 
     @Test
     public void whenSearchThenReturnCustomers() {
@@ -150,6 +154,12 @@ public class CustomerServiceImplTest {
         Customer customerToCreate = buildCustomerWithoutId();
         Customer createdCustomer = buildCustomerById(1L, "");
 
+        when(cityService.read("ibge-code")).thenReturn(CityVO.of()
+                .ibgeCode("ibge-code")
+                .name("name")
+                .state("state")
+                .build());
+
         when(customerRepository.save(customerToCreate)).thenReturn(createdCustomer);
 
         CustomerVO customerVO = customerService.create(customerCreateVO);
@@ -175,6 +185,7 @@ public class CustomerServiceImplTest {
                 .cpf("cpf")
                 .build();
 
+        when(cityService.read(null)).thenReturn(CityVO.of().build());
         when(customerRepository.save(customerToCreate)).thenThrow(DataIntegrityViolationException.class);
 
         assertThatThrownBy(() -> customerService.create(customerCreateVO))
@@ -206,10 +217,16 @@ public class CustomerServiceImplTest {
 
     @Test
     public void whenUpdateThenReturnCustomerVO() {
+        when(cityService.read("ibge-code-updated")).thenReturn(CityVO.of()
+                .ibgeCode("ibge-code-updated")
+                .name("name-updated")
+                .state("state-updated")
+                .build());
+
         when(customerRepository.findById(1L))
                 .thenReturn(Optional.of(buildCustomerById(1L, "")));
 
-        CustomerUpdateVO cityToUpdate = CustomerUpdateVO.of()
+        CustomerUpdateVO customerToUpdate = CustomerUpdateVO.of()
                 .name("name-updated")
                 .gender(Gender.FEMALE)
                 .address(AddressVO.of()
@@ -226,7 +243,7 @@ public class CustomerServiceImplTest {
                         .build())
                 .build();
 
-        CustomerVO updatedCustomerVO = customerService.update(1L, cityToUpdate);
+        CustomerVO updatedCustomerVO = customerService.update(1L, customerToUpdate);
 
         assertThat(updatedCustomerVO.getId()).isEqualTo(1L);
         assertThat(updatedCustomerVO.getName()).isEqualTo("name-updated");

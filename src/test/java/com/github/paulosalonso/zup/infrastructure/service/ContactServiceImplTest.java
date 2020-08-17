@@ -4,6 +4,7 @@ import com.github.paulosalonso.zup.domain.model.Contact;
 import com.github.paulosalonso.zup.domain.model.ContactType;
 import com.github.paulosalonso.zup.domain.model.Customer;
 import com.github.paulosalonso.zup.domain.repository.ContactRepository;
+import com.github.paulosalonso.zup.domain.repository.CustomerRepository;
 import com.github.paulosalonso.zup.domain.service.exception.NotFoundException;
 import com.github.paulosalonso.zup.domain.service.vo.contact.ContactCreateVO;
 import com.github.paulosalonso.zup.domain.service.vo.contact.ContactUpdateVO;
@@ -30,6 +31,9 @@ public class ContactServiceImplTest {
 
     @Mock
     private ContactRepository contactRepository;
+
+    @Mock
+    private CustomerRepository customerRepository;
 
     @Test
     public void whenFindContactsByCustomerIdThenReturnContactList() {
@@ -73,10 +77,11 @@ public class ContactServiceImplTest {
     }
 
     @Test
-    public void whenCreateThenReturnCity() {
+    public void whenCreateThenReturnContact() {
         Contact contactToCreate = buildContactWithoutId();
         Contact createdContact = buildContactById(1L);
 
+        when(customerRepository.existsById(1L)).thenReturn(true);
         when(contactRepository.save(contactToCreate)).thenReturn(createdContact);
 
         ContactCreateVO contactCreateVO = ContactCreateVO.of()
@@ -89,6 +94,8 @@ public class ContactServiceImplTest {
 
         assertContactVO(contactVO);
 
+        verify(customerRepository).existsById(1L);
+
         ArgumentCaptor<Contact> contactCaptor = ArgumentCaptor.forClass(Contact.class);
         verify(contactRepository).save(contactCaptor.capture());
         Contact contactArgument = contactCaptor.getValue();
@@ -96,8 +103,8 @@ public class ContactServiceImplTest {
     }
 
     @Test
-    public void whenReadThenReturnCity() {
-        when(contactRepository.findById(1L)).thenReturn(
+    public void whenFindByIdAndCustomerIdThenReturnContact() {
+        when(contactRepository.findByIdAndCustomerId(1L, 1L)).thenReturn(
                 Optional.of(Contact.of()
                         .id(1L)
                         .customer(Customer.of()
@@ -107,26 +114,28 @@ public class ContactServiceImplTest {
                         .contact("mail@mail.com")
                         .build()));
 
-        assertContactVO(contactService.read(1l));
+        assertContactVO(contactService.read(1l, 1L));
 
-        verify(contactRepository).findById(1L);
+        verify(contactRepository).findByIdAndCustomerId(1L, 1L);
     }
 
     @Test
-    public void whenReadThenThrowsNotFoundException() {
-        when(contactRepository.findById(1L))
+    public void whenFindByIdAndCustomerIdThenThrowsNotFoundException() {
+        when(contactRepository.findByIdAndCustomerId(1L, 1L))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> contactService.read(1L))
+        assertThatThrownBy(() -> contactService.read(1L, 1L))
                 .isExactlyInstanceOf(NotFoundException.class);
 
-        verify(contactRepository).findById(1L);
+        verify(contactRepository).findByIdAndCustomerId(1L, 1L);
         verifyNoMoreInteractions(contactRepository);
     }
 
     @Test
-    public void whenUpdateThenReturnCity() {
-        when(contactRepository.findById(1L))
+    public void whenUpdateThenReturnContact() {
+        when(customerRepository.existsById(1L)).thenReturn(true);
+
+        when(contactRepository.findByIdAndCustomerId(1L, 1L))
                 .thenReturn(Optional.of(buildContactById(1L)));
 
         ContactUpdateVO contactUpdateVO = ContactUpdateVO.of()
@@ -134,46 +143,53 @@ public class ContactServiceImplTest {
                 .type(ContactType.EMAIL)
                 .build();
 
-        ContactVO updatedContact = contactService.update(1L, contactUpdateVO);
+        ContactVO updatedContact = contactService.update(1L, 1L, contactUpdateVO);
 
         assertThat(updatedContact.getId()).isEqualTo(1L);
         assertThat(updatedContact.getCustomerId()).isEqualTo(1L);
         assertThat(updatedContact.getType()).isEqualTo(ContactType.EMAIL);
         assertThat(updatedContact.getContact()).isEqualTo("mail-updated@mail.com");
 
-        verify(contactRepository).findById(1L);
+        verify(customerRepository).existsById(1L);
+        verify(contactRepository).findByIdAndCustomerId(1L, 1L);
     }
 
     @Test
     public void whenUpdateThenThrowsNotFoundException() {
-        when(contactRepository.findById(1L))
+        when(customerRepository.existsById(1L)).thenReturn(true);
+
+        when(contactRepository.findByIdAndCustomerId(1L, 1L))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> contactService.update(1L, ContactUpdateVO.of().build()))
+        assertThatThrownBy(() -> contactService.update(1L, 1L, ContactUpdateVO.of().build()))
                 .isExactlyInstanceOf(NotFoundException.class);
 
-        verify(contactRepository).findById(1L);
+        verify(customerRepository).existsById(1L);
+        verify(contactRepository).findByIdAndCustomerId(1L, 1L);
         verifyNoMoreInteractions(contactRepository);
     }
 
     @Test
     public void whenDeleteThenSuccess() {
-        when(contactRepository.existsById(1L)).thenReturn(true);
+        when(customerRepository.existsById(1L)).thenReturn(true);
+        when(contactRepository.existsByIdAndCustomerId(1L, 1L)).thenReturn(true);
 
-        contactService.delete(1L);
+        contactService.delete(1L, 1L);
 
-        verify(contactRepository).existsById(1L);
-        verify(contactRepository).deleteById(1L);
+        verify(contactRepository).existsByIdAndCustomerId(1L, 1L);
+        verify(contactRepository).deleteByIdAndCustomerId(1L, 1L);
     }
 
     @Test
     public void whenDeleteThenThrowsNotFountException() {
-        when(contactRepository.existsById(1L)).thenReturn(false);
+        when(customerRepository.existsById(1L)).thenReturn(true);
+        when(contactRepository.existsByIdAndCustomerId(1L, 1L)).thenReturn(false);
 
-        assertThatThrownBy(() -> contactService.delete(1L))
+        assertThatThrownBy(() -> contactService.delete(1L, 1L))
                 .isExactlyInstanceOf(NotFoundException.class);
 
-        verify(contactRepository).existsById(1L);
+        verify(customerRepository).existsById(1L);
+        verify(contactRepository).existsByIdAndCustomerId(1L, 1L);
         verifyNoMoreInteractions(contactRepository);
     }
 
