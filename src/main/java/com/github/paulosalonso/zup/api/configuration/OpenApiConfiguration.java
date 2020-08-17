@@ -49,7 +49,7 @@ public class OpenApiConfiguration implements WebMvcConfigurer {
         return new ApiInfoBuilder()
                 .title("Zup CRUD API")
                 .description("Simple customers CRUD API built with SpringBoot")
-                .version("0.0.1-SNAPSHOT")
+                .version("1.0.0")
                 .contact(new Contact("Paulo Alonso",
                         "https://www.linkedin.com/in/paulo-alonso-67b082149/", "paulo_alonso_@hotmail.com"))
                 .build();

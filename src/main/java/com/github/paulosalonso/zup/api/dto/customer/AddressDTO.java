@@ -2,6 +2,7 @@ package com.github.paulosalonso.zup.api.dto.customer;
 
 import com.github.paulosalonso.zup.api.dto.city.CityDTO;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -10,23 +11,28 @@ import javax.validation.constraints.Size;
 
 @ApiModel("Address")
 public class AddressDTO {
-    
+
     private CityDTO city;
 
+    @ApiModelProperty(example = "00000000")
     @NotNull
     @Pattern(regexp = "[0-9]{8}")
     private String postalCode;
 
+    @ApiModelProperty(example = "Rua A")
     @NotBlank
     @Size(max = 100)
     private String street;
 
+    @ApiModelProperty(example = "100")
     @Size(max = 20)
     private String number;
 
+    @ApiModelProperty(example = "Centro")
     @Size(max = 60)
     private String district;
 
+    @ApiModelProperty(example = "Fundos")
     @Size(max = 60)
     private String complement;
 

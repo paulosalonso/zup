@@ -1,7 +1,10 @@
 package com.github.paulosalonso.zup.api.dto;
 
+import io.swagger.annotations.ApiModel;
+
 import java.util.List;
 
+@ApiModel("Page")
 public class PageDTO<T> {
     private List<T> content;
     private int page;

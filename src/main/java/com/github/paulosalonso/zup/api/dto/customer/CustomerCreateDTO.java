@@ -2,6 +2,7 @@ package com.github.paulosalonso.zup.api.dto.customer;
 
 import com.github.paulosalonso.zup.domain.model.Gender;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -12,15 +13,19 @@ import java.time.LocalDate;
 @ApiModel("CustomerCreate")
 public class CustomerCreateDTO {
 
+    @ApiModelProperty(example = "João da Silva")
     @NotBlank
     private String name;
 
+    @ApiModelProperty(example = "00000000000000")
     @NotBlank
     private String cpf;
 
+    @ApiModelProperty(example = "MALE")
     @NotNull
     private Gender gender;
 
+    @ApiModelProperty(example = "1988-02-26")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;
 

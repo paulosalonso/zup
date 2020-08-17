@@ -1,9 +1,13 @@
 package com.github.paulosalonso.zup.api.dto.customer;
 
+import com.github.paulosalonso.zup.domain.model.Customer;
 import com.github.paulosalonso.zup.domain.model.Gender;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDate;
 
+@ApiModel("Customer")
 public class CustomerDTO {
 
     private Long id;
