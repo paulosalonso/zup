@@ -2,7 +2,7 @@ version: '3'
 
 services:
   zup:
-    image: paulosalonso/zup:latest
+    image: paulosalonso/zup:1.0.1
     ports:
       - 8080:8080
     environment:
@@ -26,7 +26,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "paulo_alonso_@hotmail.com"
+      PGADMIN_DEFAULT_EMAIL: "mail@mail.com"
       PGADMIN_DEFAULT_PASSWORD: "postgres"
     ports:
       - "16543:80"
