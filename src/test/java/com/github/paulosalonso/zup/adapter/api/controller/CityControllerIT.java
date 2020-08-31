@@ -384,9 +384,6 @@ public class CityControllerIT extends BaseIT {
 
     @Test
     public void whenCreateCityWithoutRequiredFieldsThenReturnBadRequest() {
-        String notNullMessage = messageSource.getMessage("NotNull", new Object[]{}, Locale.getDefault());
-        String notBlankMessage = messageSource.getMessage("NotBlank", new Object[]{}, Locale.getDefault());
-
         given()
                 .contentType(JSON)
                 .accept(JSON)
