@@ -2,7 +2,7 @@ version: '3'
 
 services:
   zup:
-    image: paulosalonso/zup:1.0.1
+    image: paulosalonso/zup:1.0.2
     ports:
       - 8080:8080
     environment:
