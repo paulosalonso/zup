@@ -1,4 +1,4 @@
-package com.github.paulosalonso.zup.adapter.api.controller;
+package com.github.paulosalonso.zup.adapter.api;
 
 import com.github.paulosalonso.zup.adapter.cleaner.DatabaseCleaner;
 import io.restassured.RestAssured;

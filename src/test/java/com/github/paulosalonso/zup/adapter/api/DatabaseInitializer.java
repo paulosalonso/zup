@@ -1,4 +1,4 @@
-package com.github.paulosalonso.zup.adapter.api.controller;
+package com.github.paulosalonso.zup.adapter.api;
 
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;

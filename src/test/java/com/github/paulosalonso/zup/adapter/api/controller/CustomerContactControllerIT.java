@@ -1,5 +1,6 @@
 package com.github.paulosalonso.zup.adapter.api.controller;
 
+import com.github.paulosalonso.zup.adapter.api.BaseIT;
 import com.github.paulosalonso.zup.adapter.api.dto.city.CityResponseDTO;
 import com.github.paulosalonso.zup.adapter.api.dto.contact.ContactCreateDTO;
 import com.github.paulosalonso.zup.adapter.api.dto.customer.AddressDTO;

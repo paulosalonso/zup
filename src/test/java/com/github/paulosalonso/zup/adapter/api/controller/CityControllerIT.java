@@ -1,13 +1,12 @@
 package com.github.paulosalonso.zup.adapter.api.controller;
 
+import com.github.paulosalonso.zup.adapter.api.BaseIT;
 import com.github.paulosalonso.zup.adapter.api.dto.city.CityCreateDTO;
 import com.github.paulosalonso.zup.adapter.api.dto.city.CityUpdateDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-
-import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
