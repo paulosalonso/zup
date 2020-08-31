@@ -7,6 +7,10 @@ services:
       - 8080:8080
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/zup?useSSL=false&suseTimezone=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_username=postgres
+      - SPRING_DATASOURCE_password=postgres
+      - SPRING_DATASOURCE_driver-class-name=org.postgresql.Driver
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
     depends_on:
       - postgres
     networks:
