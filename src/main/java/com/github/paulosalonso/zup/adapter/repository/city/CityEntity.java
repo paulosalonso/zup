@@ -50,21 +50,6 @@ public class CityEntity {
     public void setState(String state) {
         this.state = state;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CityEntity city = (CityEntity) o;
-        return Objects.equals(ibgeCode, city.ibgeCode) &&
-                Objects.equals(name, city.name) &&
-                Objects.equals(state, city.state);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ibgeCode, name, state);
-    }
     
     public static final class Builder {
 
