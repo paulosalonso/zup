@@ -234,7 +234,7 @@ public class CustomerControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .queryParam("size", 1)
-                .queryParam("order", "name.desc")
+                .queryParam("sort", "name,desc")
                 .when()
                 .get("/customers")
                 .then()

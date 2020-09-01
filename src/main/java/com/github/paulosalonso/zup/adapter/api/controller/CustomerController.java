@@ -19,6 +19,7 @@ import com.github.paulosalonso.zup.usecase.exception.NotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -47,8 +48,8 @@ public class CustomerController {
 
     @ApiOperation("Customer search")
     @GetMapping
-    public PageDTO<CustomerDTO> search(CustomerCriteriaDTO customerCriteriaDTO) {
-        Page<Customer> page = readCustomer.findByCriteria(CustomerCriteriaDTOMapper.to(customerCriteriaDTO));
+    public PageDTO<CustomerDTO> search(CustomerCriteriaDTO customerCriteriaDTO, Pageable pageable) {
+        Page<Customer> page = readCustomer.findByCriteria(CustomerCriteriaDTOMapper.to(customerCriteriaDTO, pageable));
         return PageDTOMapper.from(page, CustomerDTOMapper::fromList);
     }
 

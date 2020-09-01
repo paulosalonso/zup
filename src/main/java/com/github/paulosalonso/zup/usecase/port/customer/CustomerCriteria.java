@@ -5,6 +5,7 @@ import com.github.paulosalonso.zup.usecase.Criteria;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerCriteria extends Criteria {
 
@@ -51,8 +52,8 @@ public class CustomerCriteria extends Criteria {
             return this;
         }
 
-        public Builder order(List<String> order) {
-            customerSearchVO.setOrder(order);
+        public Builder sort(Map<String, SortDirection> sort) {
+            customerSearchVO.setSort(sort);
             return this;
         }
 

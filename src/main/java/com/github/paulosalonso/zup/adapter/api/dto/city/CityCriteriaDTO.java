@@ -1,13 +1,12 @@
 package com.github.paulosalonso.zup.adapter.api.dto.city;
 
-import com.github.paulosalonso.zup.adapter.api.dto.CriteriaDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
 @ApiModel("CitySearch")
-public class CityCriteriaDTO extends CriteriaDTO {
+public class CityCriteriaDTO {
     @ApiModelProperty("Returns cities where the name contains this value")
     private String name;
 
@@ -40,21 +39,6 @@ public class CityCriteriaDTO extends CriteriaDTO {
 
         private Builder() {
             cityCriteriaDTO = new CityCriteriaDTO();
-        }
-
-        public Builder page(int page) {
-            cityCriteriaDTO.setPage(page);
-            return this;
-        }
-
-        public Builder size(int size) {
-            cityCriteriaDTO.setSize(size);
-            return this;
-        }
-
-        public Builder order(List<String> order) {
-            cityCriteriaDTO.setOrder(order);
-            return this;
         }
 
         public Builder name(String name) {

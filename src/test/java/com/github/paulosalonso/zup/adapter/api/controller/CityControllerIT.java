@@ -130,7 +130,7 @@ public class CityControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .queryParam("size", 1)
-                .queryParam("order", "name")
+                .queryParam("sort", "name")
                 .when()
                 .get("/cities")
                 .then()

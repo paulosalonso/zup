@@ -3,6 +3,7 @@ package com.github.paulosalonso.zup.usecase.port.city;
 import com.github.paulosalonso.zup.usecase.Criteria;
 
 import java.util.List;
+import java.util.Map;
 
 public class CityCriteria extends Criteria {
     private String name;
@@ -46,8 +47,8 @@ public class CityCriteria extends Criteria {
             return this;
         }
 
-        public Builder order(List<String> order) {
-            cityCriteria.setOrder(order);
+        public Builder sort(Map<String, SortDirection> sort) {
+            cityCriteria.setSort(sort);
             return this;
         }
 

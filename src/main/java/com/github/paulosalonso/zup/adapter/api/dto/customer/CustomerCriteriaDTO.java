@@ -1,14 +1,12 @@
 package com.github.paulosalonso.zup.adapter.api.dto.customer;
 
-import com.github.paulosalonso.zup.adapter.api.dto.CriteriaDTO;
 import com.github.paulosalonso.zup.domain.Gender;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public class CustomerCriteriaDTO extends CriteriaDTO {
+public class CustomerCriteriaDTO {
 
     @ApiModelProperty("Returns customers where the name contains this value")
     private String name;
@@ -65,21 +63,6 @@ public class CustomerCriteriaDTO extends CriteriaDTO {
 
         private Builder() {
             customerSearchVO = new CustomerCriteriaDTO();
-        }
-
-        public Builder page(int page) {
-            customerSearchVO.setPage(page);
-            return this;
-        }
-
-        public Builder size(int size) {
-            customerSearchVO.setSize(size);
-            return this;
-        }
-
-        public Builder order(List<String> order) {
-            customerSearchVO.setOrder(order);
-            return this;
         }
 
         public Builder name(String name) {
