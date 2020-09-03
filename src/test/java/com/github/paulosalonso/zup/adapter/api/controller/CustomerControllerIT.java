@@ -625,9 +625,8 @@ public class CustomerControllerIT extends BaseIT {
                 .body("detail", equalTo("Invalid field(s)."))
                 .body("timestamp", notNullValue())
                 .body("violations", hasSize(5))
-                .body("violations.context", hasItems("name", "cpf", "gender",
-                        "address.street", "address.postalCode"));
-//                .body("violations.message", hasItems("não deve ser nulo", "não deve estar em branco"));
+                .body("violations.context", hasItems("name", "cpf", "gender", "address.street", "address.postalCode"))
+                .body("violations.message", hasItems("must not be null", "must not be blank"));
     }
 
     @Test
@@ -758,8 +757,8 @@ public class CustomerControllerIT extends BaseIT {
                 .body("detail", equalTo("Invalid field(s)."))
                 .body("timestamp", notNullValue())
                 .body("violations", hasSize(4))
-                .body("violations.context", hasItems("name", "gender", "address.street", "address.postalCode"));
-//                .body("violations.message", hasItems("não deve ser nulo", "não deve estar em branco"));
+                .body("violations.context", hasItems("name", "gender", "address.street", "address.postalCode"))
+                .body("violations.message", hasItems("must not be null", "must not be blank", "must not be blank"));
     }
 
     @Test

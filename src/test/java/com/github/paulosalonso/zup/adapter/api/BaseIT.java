@@ -12,10 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 @Disabled
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("/application-test.properties")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(/*classes = ZupApplicationTest.class,*/ webEnvironment = RANDOM_PORT)
 @ContextConfiguration(initializers = DatabaseInitializer.class)
 public class BaseIT {
 	
