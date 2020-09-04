@@ -79,6 +79,30 @@
                         </configuration>
                     </execution>
                 </executions>
+
+                <configuration>
+                    <destFile>${project.build.directory}/jacoco.exec</destFile>
+                    <fileSets>
+                        <fileSet>
+                            <directory>${project.basedir}/zup-adapter/target</directory>
+                            <includes>
+                                <include>jacoco.exec</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet>
+                            <directory>${project.basedir}/zup-domain/target</directory>
+                            <includes>
+                                <include>jacoco.exec</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet>
+                            <directory>${project.basedir}/zup-usecase/target</directory>
+                            <includes>
+                                <include>jacoco.exec</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </configuration>
             </plugin>
         </plugins>
     </build>
