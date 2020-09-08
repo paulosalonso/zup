@@ -1,6 +1,6 @@
 package com.github.paulosalonso.zup.adapter.repository.specification;
 
-import com.github.paulosalonso.zup.adapter.repository.city.CityEntity;
+import com.github.paulosalonso.zup.adapter.repository.model.CityEntity;
 import com.github.paulosalonso.zup.usecase.port.city.CityCriteria;
 import org.springframework.data.jpa.domain.Specification;
 

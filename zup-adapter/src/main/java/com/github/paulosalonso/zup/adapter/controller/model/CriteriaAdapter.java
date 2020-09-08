@@ -1,13 +1,15 @@
-package com.github.paulosalonso.zup.usecase;
+package com.github.paulosalonso.zup.adapter.controller.model;
+
+import com.github.paulosalonso.zup.usecase.Criteria;
 
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 
-public class Criteria {
+public abstract class CriteriaAdapter {
     private int page = 1;
     private int size = 100;
-    private Map<String, SortDirection> sort = emptyMap();
+    private Map<String, Criteria.SortDirection> sort = emptyMap();
 
     public int getPage() {
         return page;
@@ -25,11 +27,11 @@ public class Criteria {
         this.size = size;
     }
 
-    public Map<String, SortDirection> getSort() {
+    public Map<String, Criteria.SortDirection> getSort() {
         return sort;
     }
 
-    public void setSort(Map<String, SortDirection> sort) {
+    public void setSort(Map<String, Criteria.SortDirection> sort) {
         this.sort = sort;
     }
 

@@ -1,6 +1,6 @@
 package com.github.paulosalonso.zup.adapter.repository.specification;
 
-import com.github.paulosalonso.zup.adapter.repository.customer.CustomerEntity;
+import com.github.paulosalonso.zup.adapter.repository.model.CustomerEntity;
 import com.github.paulosalonso.zup.usecase.port.customer.CustomerCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
