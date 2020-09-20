@@ -17,4 +17,4 @@ jobs:
       with:
         java-version: 11
     - name: Run Maven test phase
-      run: mvn -B test --file pom.xml
+      run: mvn -B verify --file pom.xml
