@@ -17,45 +17,45 @@ public class CityAPIControllerIT extends BaseIT {
     @Test
     public void whenSearchCitiesWithoutParametersThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                        .ibgeCode("3550308")
-                        .name("São Paulo")
-                        .state("SP")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build());
 
         createCity(CityCreateAdapter.of()
-                        .ibgeCode("4209102")
-                        .name("Joinville")
-                        .state("SC")
+                        .ibgeCode(JOINVILLE_IBGE_CODE)
+                        .name(JOINVILLE_CITY_NAME)
+                        .state(SC_STATE_INITIALS)
                         .build());
 
         given()
                 .contentType(JSON)
                 .accept(JSON)
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
                 .body("pageSize", equalTo(2))
                 .body("totalPages", equalTo(1))
                 .body("totalSize", equalTo(2))
-                .body("content.ibgeCode", hasItems("3550308", "4209102"))
-                .body("content.name", hasItems("São Paulo", "Joinville"))
-                .body("content.state", hasItems("SP", "SC"));
+                .body("content.ibgeCode", hasItems(SAO_PAULO_IBGE_CODE, JOINVILLE_IBGE_CODE))
+                .body("content.name", hasItems(SAO_PAULO_CITY_NAME, JOINVILLE_CITY_NAME))
+                .body("content.state", hasItems(SP_STATE_INITIALS, SC_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchFirstPageOfUnorderedCitiesThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
@@ -63,30 +63,30 @@ public class CityAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("size", 1)
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(2))
                 .body("totalSize", equalTo(2))
-                .body("content.ibgeCode", hasItems("3550308"))
-                .body("content.name", hasItems("São Paulo"))
-                .body("content.state", hasItems("SP"));
+                .body("content.ibgeCode", hasItems(SAO_PAULO_IBGE_CODE))
+                .body("content.name", hasItems(SAO_PAULO_CITY_NAME))
+                .body("content.state", hasItems(SP_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchSecondPageOfUnorderedCitiesThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
@@ -95,30 +95,30 @@ public class CityAPIControllerIT extends BaseIT {
                 .queryParam("page", 1)
                 .queryParam("size", 1)
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(1))
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(2))
                 .body("totalSize", equalTo(2))
-                .body("content.ibgeCode", hasItems("4209102"))
-                .body("content.name", hasItems("Joinville"))
-                .body("content.state", hasItems("SC"));
+                .body("content.ibgeCode", hasItems(JOINVILLE_IBGE_CODE))
+                .body("content.name", hasItems(JOINVILLE_CITY_NAME))
+                .body("content.state", hasItems(SC_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchFirstPageOfCitiesAscendedByNameThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
@@ -127,30 +127,30 @@ public class CityAPIControllerIT extends BaseIT {
                 .queryParam("size", 1)
                 .queryParam("sort", "name")
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(2))
                 .body("totalSize", equalTo(2))
-                .body("content.ibgeCode", hasItems("4209102"))
-                .body("content.name", hasItems("Joinville"))
-                .body("content.state", hasItems("SC"));
+                .body("content.ibgeCode", hasItems(JOINVILLE_IBGE_CODE))
+                .body("content.name", hasItems(JOINVILLE_CITY_NAME))
+                .body("content.state", hasItems(SC_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchFirstPageOfCitiesDescendedByNameThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
@@ -159,92 +159,92 @@ public class CityAPIControllerIT extends BaseIT {
                 .queryParam("size", 1)
                 .queryParam("order", "name.desc")
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(2))
                 .body("totalSize", equalTo(2))
-                .body("content.ibgeCode", hasItems("3550308"))
-                .body("content.name", hasItems("São Paulo"))
-                .body("content.state", hasItems("SP"));
+                .body("content.ibgeCode", hasItems(SAO_PAULO_IBGE_CODE))
+                .body("content.name", hasItems(SAO_PAULO_CITY_NAME))
+                .body("content.state", hasItems(SP_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchCitiesFilteredByNameThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
                 .contentType(JSON)
                 .accept(JSON)
-                .queryParam("name", "São Paulo")
+                .queryParam("name", SAO_PAULO_CITY_NAME)
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(1))
                 .body("totalSize", equalTo(1))
-                .body("content.ibgeCode", hasItems("3550308"))
-                .body("content.name", hasItems("São Paulo"))
-                .body("content.state", hasItems("SP"));
+                .body("content.ibgeCode", hasItems(SAO_PAULO_IBGE_CODE))
+                .body("content.name", hasItems(SAO_PAULO_CITY_NAME))
+                .body("content.state", hasItems(SP_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchCitiesFilteredByStateThenReturnOk() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
                 .contentType(JSON)
                 .accept(JSON)
-                .queryParam("state", "SC")
+                .queryParam("state", SC_STATE_INITIALS)
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
                 .body("pageSize", equalTo(1))
                 .body("totalPages", equalTo(1))
                 .body("totalSize", equalTo(1))
-                .body("content.ibgeCode", hasItems("4209102"))
-                .body("content.name", hasItems("Joinville"))
-                .body("content.state", hasItems("SC"));
+                .body("content.ibgeCode", hasItems(JOINVILLE_IBGE_CODE))
+                .body("content.name", hasItems(JOINVILLE_CITY_NAME))
+                .body("content.state", hasItems(SC_STATE_INITIALS));
     }
 
     @Test
     public void whenSearchCitiesFilteredThenReturnOkWithEmptyList() {
         createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build());
 
         createCity(CityCreateAdapter.of()
-                .ibgeCode("4209102")
-                .name("Joinville")
-                .state("SC")
+                .ibgeCode(JOINVILLE_IBGE_CODE)
+                .name(JOINVILLE_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         given()
@@ -252,7 +252,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("state", "RS")
                 .when()
-                .get("/cities")
+                .get("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -268,23 +268,23 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityCreateAdapter.of()
-                        .ibgeCode("3550308")
-                        .name("São Paulo")
-                        .state("SP")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build())
-                .post("/cities")
+                .post("/v1/cities")
                 .path("ibgeCode");
 
         given()
                 .contentType(JSON)
                 .accept(JSON)
                 .when()
-                .get("/cities/{ibgeCode}", ibgeCode)
+                .get("/v1/cities/{ibgeCode}", ibgeCode)
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("ibgeCode", equalTo("3550308"))
-                .body("name", equalTo("São Paulo"))
-                .body("state", equalTo("SP"));
+                .body("ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
+                .body("name", equalTo(SAO_PAULO_CITY_NAME))
+                .body("state", equalTo(SP_STATE_INITIALS));
     }
 
     @Test
@@ -293,7 +293,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .when()
-                .get("/cities/{ibgeCode}", "3550308")
+                .get("/v1/cities/{ibgeCode}", SAO_PAULO_IBGE_CODE)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("status", equalTo(404))
@@ -307,25 +307,25 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityCreateAdapter.of()
-                        .ibgeCode("3550308")
-                        .name("São Paulo")
-                        .state("SP")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build())
                 .when()
-                .post("/cities")
+                .post("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .body("ibgeCode", equalTo("3550308"))
-                .body("name", equalTo("São Paulo"))
-                .body("state", equalTo("SP"));
+                .body("ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
+                .body("name", equalTo(SAO_PAULO_CITY_NAME))
+                .body("state", equalTo(SP_STATE_INITIALS));
     }
 
     @Test
     public void whenCreateDuplicatedCityThenReturnBadRequest() {
         CityCreateAdapter cityCreateAdapter = CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SP")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SP_STATE_INITIALS)
                 .build();
 
         given()
@@ -333,7 +333,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .body(cityCreateAdapter)
                 .when()
-                .post("/cities")
+                .post("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.CREATED.value());
 
@@ -342,7 +342,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .body(cityCreateAdapter)
                 .when()
-                .post("/cities")
+                .post("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -359,11 +359,11 @@ public class CityAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .body(CityCreateAdapter.of()
                         .ibgeCode("35503088")
-                        .name("São Paulo")
+                        .name(SAO_PAULO_CITY_NAME)
                         .state("SPO")
                         .build())
                 .when()
-                .post("/cities")
+                .post("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -384,7 +384,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .body(CityCreateAdapter.of()
                         .build())
                 .when()
-                .post("/cities")
+                .post("/v1/cities")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -403,27 +403,27 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityCreateAdapter.of()
-                        .ibgeCode("3550308")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
                         .name("S Paulo")
-                        .state("SP")
+                        .state(SP_STATE_INITIALS)
                         .build())
-                .post("/cities")
+                .post("/v1/cities")
                 .path("ibgeCode");
 
         given()
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityUpdateAdapter.of()
-                        .name("São Paulo")
-                        .state("SP")
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build())
                 .when()
-                .put("/cities/{ibgeCode}", ibgeCode)
+                .put("/v1/cities/{ibgeCode}", ibgeCode)
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("ibgeCode", equalTo("3550308"))
-                .body("name", equalTo("São Paulo"))
-                .body("state", equalTo("SP"));
+                .body("ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
+                .body("name", equalTo(SAO_PAULO_CITY_NAME))
+                .body("state", equalTo(SP_STATE_INITIALS));
     }
 
     @Test
@@ -432,22 +432,22 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityCreateAdapter.of()
-                        .ibgeCode("3550308")
-                        .name("São Paulo")
-                        .state("SP")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build())
-                .post("/cities")
+                .post("/v1/cities")
                 .path("ibgeCode");
 
         given()
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityUpdateAdapter.of()
-                        .name("São Paulo")
+                        .name(SAO_PAULO_CITY_NAME)
                         .state("SPO")
                         .build())
                 .when()
-                .put("/cities/{ibgeCode}", ibgeCode)
+                .put("/v1/cities/{ibgeCode}", ibgeCode)
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -467,7 +467,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .body(CityUpdateAdapter.of()
                         .build())
                 .when()
-                .put("/cities/{ibgeCode}", "any-ibge-code")
+                .put("/v1/cities/{ibgeCode}", "any-ibge-code")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -486,11 +486,11 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityUpdateAdapter.of()
-                        .name("São Paulo")
-                        .state("SP")
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build())
                 .when()
-                .put("/cities/{ibgeCode}", "3550308")
+                .put("/v1/cities/{ibgeCode}", SAO_PAULO_IBGE_CODE)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("status", equalTo(404))
@@ -501,20 +501,20 @@ public class CityAPIControllerIT extends BaseIT {
     @Test
     public void whenDeleteCityThenReturnNoContent() {
         String ibgeCode = createCity(CityCreateAdapter.of()
-                .ibgeCode("3550308")
-                .name("São Paulo")
-                .state("SC")
+                .ibgeCode(SAO_PAULO_IBGE_CODE)
+                .name(SAO_PAULO_CITY_NAME)
+                .state(SC_STATE_INITIALS)
                 .build());
 
         when()
-                .delete("/cities/{ibgeCode}", ibgeCode)
+                .delete("/v1/cities/{ibgeCode}", ibgeCode)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
 
         given()
                 .accept(JSON)
                 .when()
-                .get("/cities/{ibgeCode}", ibgeCode)
+                .get("/v1/cities/{ibgeCode}", ibgeCode)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -522,7 +522,7 @@ public class CityAPIControllerIT extends BaseIT {
     @Test
     public void whenDeleteNonExistentCityThenReturnNotFound() {
         when()
-                .delete("/cities/{ibgeCode}", "3550308")
+                .delete("/v1/cities/{ibgeCode}", SAO_PAULO_IBGE_CODE)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -532,7 +532,7 @@ public class CityAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(cityCreateAdapter)
-                .post("/cities")
+                .post("/v1/cities")
                 .path("ibgeCode");
     }
 

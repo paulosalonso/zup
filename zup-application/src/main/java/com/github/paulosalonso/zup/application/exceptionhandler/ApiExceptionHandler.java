@@ -83,7 +83,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity handleCreateException(CreateException ex, WebRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 
-		Problem problem = createProblemBuilder(status, ProblemType.INVALID_PARAMETER, ex.getMessage())
+		Problem problem = createProblemBuilder(status, ProblemType.INVALID_DATA, ex.getMessage())
 				.build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);

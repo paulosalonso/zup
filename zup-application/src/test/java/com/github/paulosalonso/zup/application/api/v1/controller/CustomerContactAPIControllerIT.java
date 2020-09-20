@@ -216,6 +216,8 @@ public class CustomerContactAPIControllerIT extends BaseIT {
     }
 
     private Integer createCustomer() {
+        mockViaCepJoinville();
+
         return given()
                 .contentType(JSON)
                 .accept(JSON)
@@ -225,13 +227,13 @@ public class CustomerContactAPIControllerIT extends BaseIT {
                         .gender(Gender.MALE)
                         .address(AddressAdapter.of()
                                 .city(CityResponseAdapter.of()
-                                        .ibgeCode("4209102")
+                                        .ibgeCode(JOINVILLE_IBGE_CODE)
                                         .build())
                                 .street("street")
                                 .number("number")
                                 .complement("complement")
                                 .district("district")
-                                .postalCode("89217008")
+                                .postalCode(JOINVILLE_POSTAL_CODE)
                                 .build())
                         .birthDate(LocalDate.of(1988, Month.FEBRUARY, 26))
                         .build())

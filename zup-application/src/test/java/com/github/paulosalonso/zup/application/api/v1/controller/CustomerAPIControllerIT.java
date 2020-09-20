@@ -7,17 +7,12 @@ import com.github.paulosalonso.zup.adapter.controller.model.customer.AddressAdap
 import com.github.paulosalonso.zup.adapter.controller.model.customer.CustomerCreateAdapter;
 import com.github.paulosalonso.zup.adapter.controller.model.customer.CustomerUpdateAdapter;
 import com.github.paulosalonso.zup.domain.Gender;
-import com.github.paulosalonso.zup.domain.PostalCodeInfo;
-import com.github.paulosalonso.zup.usecase.port.city.GetPostalCodeInfoPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -25,7 +20,6 @@ import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class CustomerAPIControllerIT extends BaseIT {
@@ -33,7 +27,7 @@ public class CustomerAPIControllerIT extends BaseIT {
     @BeforeEach
     public void setUp() {
         super.setUp();
-        createCity();
+        createSaoPauloCity();
     }
 
     @Test
@@ -58,7 +52,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -68,7 +62,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue(), notNullValue()))
                 .body("content.name", hasItems("name-a", "name-b"))
                 .body("content.cpf", hasItems("cpf-a", "cpf-b"))
-                .body("content.address.city.ibgeCode", contains("3550308", "3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE, SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street", "street"))
                 .body("content.address.number", contains("number", "number"))
                 .body("content.address.complement", contains("complement", "complement"))
@@ -101,7 +95,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("size", 1)
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -111,7 +105,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-a"))
                 .body("content.cpf", hasItems("cpf-a"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -145,7 +139,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .queryParam("page", 1)
                 .queryParam("size", 1)
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(1))
@@ -155,7 +149,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-b"))
                 .body("content.cpf", hasItems("cpf-b"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -189,7 +183,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .queryParam("size", 1)
                 .queryParam("order", "name")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -199,7 +193,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-a"))
                 .body("content.cpf", hasItems("cpf-a"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -233,7 +227,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .queryParam("size", 1)
                 .queryParam("sort", "name,desc")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -243,7 +237,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-b"))
                 .body("content.cpf", hasItems("cpf-b"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -276,7 +270,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("name", "name-a")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -286,7 +280,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-a"))
                 .body("content.cpf", hasItems("cpf-a"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -319,7 +313,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("cpf", "cpf-a")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -329,7 +323,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-a"))
                 .body("content.cpf", hasItems("cpf-a"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -362,7 +356,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("gender", "MALE")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -372,7 +366,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-a"))
                 .body("content.cpf", hasItems("cpf-a"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -405,7 +399,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("birthDate", "1988-02-26")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -415,7 +409,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .body("content.id", hasItems(notNullValue()))
                 .body("content.name", hasItems("name-a"))
                 .body("content.cpf", hasItems("cpf-a"))
-                .body("content.address.city.ibgeCode", contains("3550308"))
+                .body("content.address.city.ibgeCode", contains(SAO_PAULO_IBGE_CODE))
                 .body("content.address.street", contains("street"))
                 .body("content.address.number", contains("number"))
                 .body("content.address.complement", contains("complement"))
@@ -448,7 +442,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .queryParam("cpf", "cpf-c")
                 .when()
-                .get("/customers")
+                .get("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("page", equalTo(0))
@@ -472,13 +466,13 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .when()
-                .get("/customers/{customerId}", id)
+                .get("/v1/customers/{customerId}", id)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", equalTo(id))
                 .body("name", equalTo("name-a"))
                 .body("cpf", equalTo("cpf-a"))
-                .body("address.city.ibgeCode", equalTo("3550308"))
+                .body("address.city.ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
                 .body("address.street", equalTo("street"))
                 .body("address.number", equalTo("number"))
                 .body("address.complement", equalTo("complement"))
@@ -494,7 +488,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .when()
-                .get("/customers/{anyId}", 1)
+                .get("/v1/customers/{anyId}", 1)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("status", equalTo(404))
@@ -515,13 +509,13 @@ public class CustomerAPIControllerIT extends BaseIT {
                         .birthDate(LocalDate.of(1988, Month.FEBRUARY, 26))
                         .build())
                 .when()
-                .post("/customers")
+                .post("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .body("id", notNullValue())
                 .body("name", equalTo("name-a"))
                 .body("cpf", equalTo("cpf-a"))
-                .body("address.city.ibgeCode", equalTo("3550308"))
+                .body("address.city.ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
                 .body("address.street", equalTo("street"))
                 .body("address.number", equalTo("number"))
                 .body("address.complement", equalTo("complement"))
@@ -547,29 +541,29 @@ public class CustomerAPIControllerIT extends BaseIT {
                                 .number("number")
                                 .complement("complement")
                                 .district("district")
-                                .postalCode("89201110")
+                                .postalCode(JOINVILLE_POSTAL_CODE)
                                 .build())
                         .birthDate(LocalDate.of(1988, Month.FEBRUARY, 26))
                         .build())
                 .when()
-                .post("/customers")
+                .post("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .body("id", notNullValue())
                 .body("name", equalTo("name-a"))
                 .body("cpf", equalTo("cpf-a"))
-                .body("address.city.ibgeCode", equalTo("4209102"))
+                .body("address.city.ibgeCode", equalTo(JOINVILLE_IBGE_CODE))
                 .body("address.city.name", equalTo("Joinville"))
                 .body("address.city.state", equalTo("SC"))
                 .body("address.street", equalTo("street"))
                 .body("address.number", equalTo("number"))
                 .body("address.complement", equalTo("complement"))
                 .body("address.district", equalTo("district"))
-                .body("address.postalCode", equalTo("89201110"))
+                .body("address.postalCode", equalTo(JOINVILLE_POSTAL_CODE))
                 .body("gender", equalTo("MALE"))
                 .body("birthDate", equalTo("1988-02-26"));
 
-        verify(getPostalCodeInfoPort, times(2)).getPostalCodeInfo("89201110");
+        verifyViaCepJoinville(2);
     }
 
     @Test
@@ -587,7 +581,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .body(customerCreateAdapter)
                 .when()
-                .post("/customers")
+                .post("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.CREATED.value());
 
@@ -596,7 +590,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .body(customerCreateAdapter)
                 .when()
-                .post("/customers")
+                .post("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -614,7 +608,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                         .address(AddressAdapter.of().build())
                         .build())
                 .when()
-                .post("/customers")
+                .post("/v1/customers")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -638,7 +632,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                         .address(buildAddress())
                         .birthDate(LocalDate.of(1988, Month.FEBRUARY, 26))
                         .build())
-                .post("/customers")
+                .post("/v1/customers")
                 .path("id");
 
         CustomerUpdateAdapter customerUpdateAdapter = CustomerUpdateAdapter.of()
@@ -646,7 +640,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .gender(Gender.FEMALE)
                 .address(AddressAdapter.of()
                         .city(CityResponseAdapter.of()
-                                .ibgeCode("3550308")
+                                .ibgeCode(SAO_PAULO_IBGE_CODE)
                                 .build())
                         .street("street-updated")
                         .number("number-updated")
@@ -661,13 +655,13 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .accept(JSON)
                 .body(customerUpdateAdapter)
                 .when()
-                .put("/customers/{customerId}", id)
+                .put("/v1/customers/{customerId}", id)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", notNullValue())
                 .body("name", equalTo("name-updated"))
                 .body("cpf", equalTo("cpf"))
-                .body("address.city.ibgeCode", equalTo("3550308"))
+                .body("address.city.ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
                 .body("address.street", equalTo("street-updated"))
                 .body("address.number", equalTo("number-updated"))
                 .body("address.complement", equalTo("complement-updated"))
@@ -694,11 +688,11 @@ public class CustomerAPIControllerIT extends BaseIT {
                                 .number("number")
                                 .complement("complement")
                                 .district("district")
-                                .postalCode("89201110")
+                                .postalCode(JOINVILLE_POSTAL_CODE)
                                 .build())
                         .birthDate(LocalDate.of(1988, Month.FEBRUARY, 26))
                         .build())
-                .post("/customers")
+                .post("/v1/customers")
                 .path("id");
 
         given()
@@ -712,29 +706,29 @@ public class CustomerAPIControllerIT extends BaseIT {
                                 .number("number")
                                 .complement("complement")
                                 .district("district")
-                                .postalCode("01001000")
+                                .postalCode(SAO_PAULO_POSTAL_CODE)
                                 .build())
                         .build())
                 .when()
-                .put("/customers/{id}", id)
+                .put("/v1/customers/{id}", id)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", notNullValue())
                 .body("name", equalTo("name-a"))
                 .body("cpf", equalTo("cpf-a"))
-                .body("address.city.ibgeCode", equalTo("3550308"))
-                .body("address.city.name", equalTo("São Paulo"))
-                .body("address.city.state", equalTo("SP"))
+                .body("address.city.ibgeCode", equalTo(SAO_PAULO_IBGE_CODE))
+                .body("address.city.name", equalTo(SAO_PAULO_CITY_NAME))
+                .body("address.city.state", equalTo(SP_STATE_INITIALS))
                 .body("address.street", equalTo("street"))
                 .body("address.number", equalTo("number"))
                 .body("address.complement", equalTo("complement"))
                 .body("address.district", equalTo("district"))
-                .body("address.postalCode", equalTo("01001000"))
+                .body("address.postalCode", equalTo(SAO_PAULO_POSTAL_CODE))
                 .body("gender", equalTo("MALE"))
                 .body("birthDate", equalTo("1988-02-26"));
 
-        verify(getPostalCodeInfoPort, times(2)).getPostalCodeInfo("89201110");
-        verify(getPostalCodeInfoPort).getPostalCodeInfo("01001000");
+        verifyViaCepJoinville(2);
+        verifyViaCepSaoPaulo(1);
     }
 
     @Test
@@ -746,7 +740,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                         .address(AddressAdapter.of().build())
                         .build())
                 .when()
-                .put("/customers/{anyId}", 1)
+                .put("/v1/customers/{anyId}", 1)
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("status", equalTo(400))
@@ -769,7 +763,7 @@ public class CustomerAPIControllerIT extends BaseIT {
                         .address(buildAddress())
                         .build())
                 .when()
-                .put("/customers/{anyId}", 1)
+                .put("/v1/customers/{anyId}", 1)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("status", equalTo(404))
@@ -788,14 +782,14 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .build());
 
         when()
-                .delete("/customers/{customerId}", id)
+                .delete("/v1/customers/{customerId}", id)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
 
         given()
                 .accept(JSON)
                 .when()
-                .get("/customers/{customerId}", id)
+                .get("/v1/customers/{customerId}", id)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -803,7 +797,7 @@ public class CustomerAPIControllerIT extends BaseIT {
     @Test
     public void whenDeleteNonExistentCityThenReturnNoContent() {
         when()
-                .delete("/customers/{customerId}", 1)
+                .delete("/v1/customers/{customerId}", 1)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -813,27 +807,27 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .contentType(JSON)
                 .accept(JSON)
                 .body(customerCreateAdapter)
-                .post("/customers")
+                .post("/v1/customers")
                 .path("id");
     }
 
-    private String createCity() {
+    private String createSaoPauloCity() {
         return given()
                 .contentType(JSON)
                 .accept(JSON)
                 .body(CityCreateAdapter.of()
-                        .ibgeCode("3550308")
-                        .name("São Paulo")
-                        .state("SP")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
+                        .name(SAO_PAULO_CITY_NAME)
+                        .state(SP_STATE_INITIALS)
                         .build())
-                .post("/cities")
+                .post("/v1/cities")
                 .path("ibgeCode");
     }
 
     private AddressAdapter buildAddress() {
         return AddressAdapter.of()
                 .city(CityResponseAdapter.of()
-                        .ibgeCode("3550308")
+                        .ibgeCode(SAO_PAULO_IBGE_CODE)
                         .build())
                 .street("street")
                 .number("number")
@@ -841,36 +835,6 @@ public class CustomerAPIControllerIT extends BaseIT {
                 .district("district")
                 .postalCode("00000000")
                 .build();
-    }
-
-    private void mockViaCepSaoPaulo() {
-        PostalCodeInfo postalCodeInfo = PostalCodeInfo.of()
-                .street("Praça da Sé")
-                .stateInitials("SP")
-                .postalCode("01001000")
-                .ibgeCode("3550308")
-                .district("Sé")
-                .complement("lado ímpar")
-                .cityName("São Paulo")
-                .build();
-
-        Mockito.when(getPostalCodeInfoPort.getPostalCodeInfo("01001000"))
-                .thenReturn(Optional.of(postalCodeInfo));
-    }
-
-    private void mockViaCepJoinville() {
-        PostalCodeInfo postalCodeInfo = PostalCodeInfo.of()
-                .street("Rua Padre Carlos")
-                .stateInitials("SC")
-                .postalCode("89201110")
-                .ibgeCode("4209102")
-                .district("Centro")
-                .complement("")
-                .cityName("Joinville")
-                .build();
-
-        Mockito.when(getPostalCodeInfoPort.getPostalCodeInfo("89201110"))
-                .thenReturn(Optional.of(postalCodeInfo));
     }
 
 }
