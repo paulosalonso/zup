@@ -1,8 +1,11 @@
 package com.github.paulosalonso.zup.application.configuration;
 
 import com.google.common.base.Predicates;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,6 +19,8 @@ import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -32,6 +37,7 @@ public class OpenApiConfiguration implements WebMvcConfigurer {
                         Predicates.not(PathSelectors.ant("/error")),
                         PathSelectors.any()))
                 .build()
+                .directModelSubstitute(Pageable.class, PageableModel.class)
                 .apiInfo(buildApiInfo());
 
         addTags(docket);
@@ -62,6 +68,43 @@ public class OpenApiConfiguration implements WebMvcConfigurer {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @ApiModel("Pageable")
+    public class PageableModel {
+
+        @ApiModelProperty(example = "0", value = "Page number, zero based")
+        private int page;
+
+        @ApiModelProperty(example = "20", value = "Number of elements per page. Default is 20")
+        private int size;
+
+        @ApiModelProperty(example = "name,asc", value = "Properties for sort. By default, asc is used. For descending sorting use 'name,desc', for example.")
+        private List<String> sort;
+
+        public int getPage() {
+            return page;
+        }
+
+        public void setPage(int page) {
+            this.page = page;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public List<String> getSort() {
+            return sort;
+        }
+
+        public void setSort(List<String> sort) {
+            this.sort = sort;
+        }
     }
 
 }
