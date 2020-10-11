@@ -4,7 +4,7 @@ VERSION ?= $(shell git rev-parse --short=7 HEAD)
 IMAGE ?= paulosalonso/zup
 ROOTPATH ?= $(shell git rev-parse --show-toplevel)
 TMP_DIR := "$(shell mktemp -d $(ROOTPATH)/tmp.build.XXXXXXXXXX)"
-ARTIFACTS ?= "$(shell git rev-parse --show-toplevel)/target/zup.jar"
+ARTIFACTS ?= "$(shell git rev-parse --show-toplevel)/zup-application/target/zup-application.jar"
 DOCKERPATH ?= "$(shell git rev-parse --show-toplevel)/docker"
 BRANCH ?= $(shell git name-rev --name-only HEAD)
 
@@ -17,15 +17,15 @@ define isLatest
 	@[ $(VERSION) != "latest" ] || (echo "VERSION can't be latest in $(@)"; exit 1)
 endef
 
-# Rule "build:local"
-.PHONY: build\:local
-build\:local: ## Build the Dockerfile.local
+# Rule "build:latest"
+.PHONY: build\:latest
+build\:latest: ## Build the Dockerfile.latest
 	$(call isLatest)
 	cp -R $(ARTIFACTS) $(TMP_DIR)
 	cp -R $(DOCKERPATH)/* $(TMP_DIR)
 	cd $(TMP_DIR)
 	docker build --force-rm \
-		-t "$(IMAGE)":local \
+		-t "$(IMAGE)":latest \
 		--build-arg CURRENT_BRANCH=$(BRANCH) \
 		$(TMP_DIR)
 	sleep 0.2
