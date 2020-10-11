@@ -44,8 +44,8 @@ jobs:
         - name: Build package with Maven
           run: mvn -B package --file pom.xml -DskipTests
         
-        - name: Listing directory content
-          run: ls
+        - name: Listing target directory content
+          run: cd target && ls
           
         - name: Moving artifact to staging directory
           run: mkdir staging && cp target/*.jar staging
