@@ -4,7 +4,7 @@ VERSION ?= $(shell git rev-parse --short=7 HEAD)
 IMAGE ?= paulosalonso/zup
 ROOTPATH ?= $(shell git rev-parse --show-toplevel)
 TMP_DIR := "$(shell mktemp -d $(ROOTPATH)/tmp.build.XXXXXXXXXX)"
-ARTIFACTS ?= "$(shell git rev-parse --show-toplevel)/target/zup.jar"
+ARTIFACTS ?= "$(shell git rev-parse --show-toplevel)/zup-application/target/zup-application.jar"
 DOCKERPATH ?= "$(shell git rev-parse --show-toplevel)/docker"
 BRANCH ?= $(shell git name-rev --name-only HEAD)
 
