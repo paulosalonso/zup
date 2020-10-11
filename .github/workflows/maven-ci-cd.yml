@@ -50,18 +50,12 @@ jobs:
             
         - name: Build package with Maven
           run: mvn -B package --file pom.xml -DskipTests
-        
-        - name: Entering the target directory
-          run: cd target
           
-        - name: Listing target directory content
-          run: ls
-
-        - name: Returning to the root directory
-          run: cd ..
+        - name: Creating staging folder
+          run: mkdir staging
           
-        - name: Moving artifact to staging directory
-          run: mkdir staging && cp target/*.jar staging
+        - name: Moving artifact to staging folder
+          run: cp target/*.jar staging
           
         - name: Uploading artfact
           uses: actions/upload-artifact@v1
