@@ -54,7 +54,7 @@ jobs:
         - name: Creating staging folder
           run: mkdir staging
         
-        - run: ls
+        - run: cd target && ls
           
         - name: Moving artifact to staging folder
           run: cp target/*.jar staging
