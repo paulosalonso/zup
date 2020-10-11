@@ -1,5 +1,5 @@
 
-name: Maven CI/CD
+name: Docker Hub CD
 
 on:
   push:
