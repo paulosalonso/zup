@@ -50,14 +50,9 @@ jobs:
             
         - name: Build package with Maven
           run: mvn package -DskipTests
-          
-        - name: Creating staging folder
-          run: mkdir staging
-        
-        - run: cd target && ls
-          
+                    
         - name: Moving artifact to staging folder
-          run: cp target/*.jar staging
+          run: mkdir staging && cp zup-application/target/zup-application.jar staging
           
         - name: Uploading artfact
           uses: actions/upload-artifact@v1
