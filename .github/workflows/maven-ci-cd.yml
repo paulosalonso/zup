@@ -39,11 +39,11 @@ jobs:
           name: package
           path: staging
   
-  docker-image-publish:
-    name: Publish to Docker Hub
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
+#   docker-image-publish:
+#     name: Publish to Docker Hub
+#     runs-on: ubuntu-latest
+#     needs: [build]
+#     steps:
 #       - uses: actions/checkout@v2
       
       - name: Docker Hub Login
