@@ -4,7 +4,7 @@
   <parent>
     <artifactId>zup-parent</artifactId>
     <groupId>com.github.paulosalonso</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>com.github.paulosalonso</groupId>
