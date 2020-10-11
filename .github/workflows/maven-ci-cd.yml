@@ -49,7 +49,7 @@ jobs:
             restore-keys: ${{ runner.os }}-m2
             
         - name: Build package with Maven
-          run: mvn -B package --file pom.xml -DskipTests
+          run: mvn package -DskipTests
           
         - name: Creating staging folder
           run: mkdir staging
