@@ -15,8 +15,7 @@ public class CreateCustomer {
     private final CreateCity createCity;
     private final Publisher publisher;
 
-    // TODO - Remover readCustomerPort e readCityPort após ajustar as dependências para usar o outro construtor
-    public CreateCustomer(CreateCustomerPort createCustomerPort, ReadCustomerPort readCustomerPort, ReadCityPort readCityPort, CreateCity createCity) {
+    public CreateCustomer(CreateCustomerPort createCustomerPort, CreateCity createCity) {
         this(createCustomerPort, createCity, new PublisherFake());
     }
 

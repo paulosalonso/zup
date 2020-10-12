@@ -11,6 +11,7 @@ import com.github.paulosalonso.zup.usecase.port.customer.CreateCustomerPort;
 import com.github.paulosalonso.zup.usecase.port.customer.DeleteCustomerPort;
 import com.github.paulosalonso.zup.usecase.port.customer.ReadCustomerPort;
 import com.github.paulosalonso.zup.usecase.port.customer.UpdateCustomerPort;
+import com.github.paulosalonso.zup.usecase.publisher.Publisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,9 +19,9 @@ import org.springframework.context.annotation.Configuration;
 public class CustomerConfiguration {
 
     @Bean
-    public CreateCustomer createCustomer(CreateCustomerPort createCustomerPort,
-            ReadCustomerPort readCustomerPort, ReadCityPort readCityPort, CreateCity createCity) {
-        return new CreateCustomer(createCustomerPort, readCustomerPort, readCityPort, createCity);
+    public CreateCustomer createCustomer(
+            CreateCustomerPort createCustomerPort, CreateCity createCity, Publisher publisher) {
+        return new CreateCustomer(createCustomerPort, createCity, publisher);
     }
 
     @Bean
