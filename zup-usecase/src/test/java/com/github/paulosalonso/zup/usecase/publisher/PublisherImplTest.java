@@ -7,17 +7,17 @@ import java.util.function.Consumer;
 
 import static org.mockito.Mockito.*;
 
-public class PublisherTest {
+public class PublisherImplTest {
 
-    private Publisher publisher = new Publisher();
+    private PublisherImpl publisherImpl = new PublisherImpl();
 
     @Test
     public void givenAConsumerWhenPublishAConsumedTypeThenAccept() {
         PrintStream out = spy(System.out);
         Consumer<String> consumer = out::println;
 
-        publisher.registerConsumer(consumer, String.class);
-        publisher.publish("Test");
+        publisherImpl.registerConsumer(consumer, String.class);
+        publisherImpl.publish("Test");
 
         verify(out).println("Test");
     }
@@ -27,8 +27,8 @@ public class PublisherTest {
         PrintStream out = spy(System.out);
         Consumer<String> consumer = out::println;
 
-        publisher.registerConsumer(consumer, String.class);
-        publisher.publish(1);
+        publisherImpl.registerConsumer(consumer, String.class);
+        publisherImpl.publish(1);
 
         verifyNoInteractions(out);
     }
