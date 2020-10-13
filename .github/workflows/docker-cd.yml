@@ -3,6 +3,8 @@ name: Docker Hub CD
 
 on:
   release:
+    types:
+      - published
 
 jobs:
   build-and-publish:
