@@ -3,10 +3,6 @@ name: Docker Hub CD
 
 on:
   release:
-#  push:
-#    branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
 
 jobs:
   build-and-publish:
