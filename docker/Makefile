@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 
-VERSION ?= $(shell git rev-parse --short=7 HEAD)
+VERSION ?= $(shell git describe --tags --abbrev=0)
 IMAGE ?= paulosalonso/zup
 ROOTPATH ?= $(shell git rev-parse --show-toplevel)
 TMP_DIR := "$(shell mktemp -d $(ROOTPATH)/tmp.build.XXXXXXXXXX)"
@@ -19,13 +19,27 @@ endef
 
 # Rule "build:latest"
 .PHONY: build\:latest
-build\:latest: ## Build the Dockerfile.latest
+build\:latest:
 	$(call isLatest)
 	cp -R $(ARTIFACTS) $(TMP_DIR)
 	cp -R $(DOCKERPATH)/* $(TMP_DIR)
 	cd $(TMP_DIR)
 	docker build --force-rm \
 		-t "$(IMAGE)":latest \
+		--build-arg CURRENT_BRANCH=$(BRANCH) \
+		$(TMP_DIR)
+	sleep 0.2
+	rm -rf $(TMP_DIR)
+
+# Rule "build"
+.PHONY: build
+build:
+	$(call isLatest)
+	cp -R $(ARTIFACTS) $(TMP_DIR)
+	cp -R $(DOCKERPATH)/* $(TMP_DIR)
+	cd $(TMP_DIR)
+	docker build --force-rm \
+		--no-cache -t $(IMAGE):$(VERSION) \
 		--build-arg CURRENT_BRANCH=$(BRANCH) \
 		$(TMP_DIR)
 	sleep 0.2
