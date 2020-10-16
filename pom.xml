@@ -30,8 +30,8 @@
 
         <skip.unit.tests>false</skip.unit.tests>
         <skip.it.tests>false</skip.it.tests>
-        <line.coverage>0.9</line.coverage>
-        <branch.coverage>0.9</branch.coverage>
+        <line.coverage>0</line.coverage>
+        <branch.coverage>0</branch.coverage>
     </properties>
 
     <dependencyManagement>
