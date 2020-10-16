@@ -1,13 +1,12 @@
 package com.github.paulosalonso.zup.usecase.publisher;
 
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
 
+import static com.github.paulosalonso.zup.usecase.LoggerHelper.getListAppender;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PublisherFakeTest {
@@ -16,7 +15,7 @@ public class PublisherFakeTest {
 
     @Test
     public void whenRegisterConsumerThenLog() {
-        ListAppender<ILoggingEvent> appender = buildAppender();
+        ListAppender<ILoggingEvent> appender = getListAppender();
 
         PrintStream out = System.out;
 
@@ -31,7 +30,7 @@ public class PublisherFakeTest {
 
     @Test
     public void whenPublishThenLog() {
-        ListAppender<ILoggingEvent> appender = buildAppender();
+        ListAppender<ILoggingEvent> appender = getListAppender();
 
         publisherFake.publish("Test");
 
@@ -40,14 +39,6 @@ public class PublisherFakeTest {
                 .first()
                 .satisfies(event -> assertThat(event.getFormattedMessage())
                         .isEqualTo("Attempt to publish value of type String"));
-    }
-
-    private ListAppender<ILoggingEvent> buildAppender() {
-        Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> appender = new ListAppender<>();
-        appender.start();
-        logger.addAppender(appender);
-        return appender;
     }
 
 }
