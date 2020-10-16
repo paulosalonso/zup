@@ -10,8 +10,8 @@ public class PublisherFake implements Publisher {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherFake.class);
 
     @Override
-    public void registerConsumer(Consumer consumer, Class consumedType) {
-        LOGGER.info("Attempt to register consumer for type {}", consumedType.getSimpleName());
+    public void registerConsumer(Consumer consumer, Class consumedType, String consumerName) {
+        LOGGER.info("Attempt to register consumer called '{}' for type {}", consumerName, consumedType.getSimpleName());
     }
 
     @Override

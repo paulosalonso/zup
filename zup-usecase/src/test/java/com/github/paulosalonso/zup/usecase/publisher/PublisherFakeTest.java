@@ -19,13 +19,13 @@ public class PublisherFakeTest {
 
         PrintStream out = System.out;
 
-        publisherFake.registerConsumer(out::println, String.class);
+        publisherFake.registerConsumer(out::println, String.class, "test");
 
         assertThat(appender.list)
                 .hasSize(1)
                 .first()
                 .satisfies(event -> assertThat(event.getFormattedMessage())
-                        .isEqualTo("Attempt to register consumer for type String"));
+                        .isEqualTo("Attempt to register consumer called 'test' for type String"));
     }
 
     @Test

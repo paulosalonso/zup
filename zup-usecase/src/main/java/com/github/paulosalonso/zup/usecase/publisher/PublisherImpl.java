@@ -16,9 +16,16 @@ public class PublisherImpl implements Publisher {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherImpl.class);
 
     private Map<Class, List<Consumer>> globalConsumers = new HashMap<>();
+    private Map<Consumer, String> consumersNames = new HashMap<>();
 
     @Override
-    public void registerConsumer(Consumer consumer, Class consumedType) {
+    public void registerConsumer(Consumer consumer, Class consumedType, String consumerName) {
+        if (consumersNames.containsValue(consumerName)) {
+            throw new IllegalArgumentException("'" + consumerName + "' is a consumer name already registered");
+        }
+
+        consumersNames.put(consumer, consumerName);
+
         List<Consumer> consumers = globalConsumers
                 .computeIfAbsent(consumedType, k -> new ArrayList<>());
 
@@ -37,7 +44,7 @@ public class PublisherImpl implements Publisher {
         try {
             consumer.accept(value);
         } catch (Exception e) {
-            LOGGER.error("An error occurred when publishing value to consumer {}", consumer.toString(), e);
+            LOGGER.error("An error occurred when publishing value to consumer '{}'", consumersNames.get(consumer), e);
         }
     }
 

@@ -21,7 +21,7 @@ public class PublisherImplTest {
         PrintStream out = spy(System.out);
         Consumer<String> consumer = out::println;
 
-        publisherImpl.registerConsumer(consumer, String.class);
+        publisherImpl.registerConsumer(consumer, String.class, "test");
         publisherImpl.publish("Test");
 
         verify(out).println("Test");
@@ -32,7 +32,7 @@ public class PublisherImplTest {
         PrintStream out = spy(System.out);
         Consumer<String> consumer = out::println;
 
-        publisherImpl.registerConsumer(consumer, String.class);
+        publisherImpl.registerConsumer(consumer, String.class, "test");
         publisherImpl.publish(1);
 
         verifyNoInteractions(out);
@@ -47,8 +47,8 @@ public class PublisherImplTest {
 
         doThrow(RuntimeException.class).when(consumerA).accept("Test");
 
-        publisherImpl.registerConsumer(consumerA, String.class);
-        publisherImpl.registerConsumer(consumerB, String.class);
+        publisherImpl.registerConsumer(consumerA, String.class, "consumer a");
+        publisherImpl.registerConsumer(consumerB, String.class, "consumer b");
 
         publisherImpl.publish("Test");
 
@@ -59,7 +59,8 @@ public class PublisherImplTest {
                 .hasSize(1)
                 .first().satisfies(event -> {
                     assertThat(event.getLevel()).isEqualTo(Level.ERROR);
-                    assertThat(event.getLoggerName()).isEqualTo(publisherImpl.getClass().getName());
+                    assertThat(event.getFormattedMessage())
+                            .isEqualTo("An error occurred when publishing value to consumer 'consumer a'");
                 });
     }
 
