@@ -4,12 +4,12 @@
     <parent>
         <groupId>com.github.paulosalonso</groupId>
         <artifactId>zup-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>com.github.paulosalonso</groupId>
     <artifactId>zup-adapter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>zup-adapter</name>
 
     <properties>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.github.paulosalonso</groupId>
             <artifactId>zup-usecase</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

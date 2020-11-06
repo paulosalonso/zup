@@ -15,6 +15,7 @@ import com.github.paulosalonso.zup.usecase.port.customer.UpdateCustomerPort;
 import com.github.paulosalonso.zup.usecase.publisher.Publisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class CustomerConfiguration {
@@ -46,6 +47,7 @@ public class CustomerConfiguration {
         return new CustomerController(createCustomer, readCustomer, updateCustomer, deleteCustomer);
     }
 
+    @Profile("customer-creation-notifier")
     @Bean
     public CustomerCreatedListener customerCreatedListener(Publisher publisher, NotificationProducer notificationProducer) {
         return new CustomerCreatedListener(publisher, notificationProducer);

@@ -7,6 +7,7 @@ services:
       - 8070:8070
     environment:
       SERVER_PORT: 8070
+      SPRING_PROFILES_ACTIVE: customer-creation-notifier
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/zup?useSSL=false&suseTimezone=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres

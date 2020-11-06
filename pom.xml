@@ -5,7 +5,7 @@
 
     <groupId>com.github.paulosalonso</groupId>
     <artifactId>zup-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>zup-parent</name>
 
     <packaging>pom</packaging>
