@@ -1,5 +1,5 @@
 
-name: Docker Hub CD
+name: Docker Hub CI
 
 on:
   release:

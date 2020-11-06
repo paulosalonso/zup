@@ -1,12 +1,13 @@
 package com.github.paulosalonso.zup.application.configuration;
 
 import com.github.paulosalonso.zup.adapter.controller.CustomerController;
+import com.github.paulosalonso.zup.adapter.event.CustomerCreatedListener;
+import com.github.paulosalonso.zup.adapter.kafka.producer.NotificationProducer;
 import com.github.paulosalonso.zup.usecase.city.CreateCity;
 import com.github.paulosalonso.zup.usecase.customer.CreateCustomer;
 import com.github.paulosalonso.zup.usecase.customer.DeleteCustomer;
 import com.github.paulosalonso.zup.usecase.customer.ReadCustomer;
 import com.github.paulosalonso.zup.usecase.customer.UpdateCustomer;
-import com.github.paulosalonso.zup.usecase.port.city.ReadCityPort;
 import com.github.paulosalonso.zup.usecase.port.customer.CreateCustomerPort;
 import com.github.paulosalonso.zup.usecase.port.customer.DeleteCustomerPort;
 import com.github.paulosalonso.zup.usecase.port.customer.ReadCustomerPort;
@@ -43,5 +44,10 @@ public class CustomerConfiguration {
     public CustomerController customerController(CreateCustomer createCustomer,
             ReadCustomer readCustomer, UpdateCustomer updateCustomer, DeleteCustomer deleteCustomer) {
         return new CustomerController(createCustomer, readCustomer, updateCustomer, deleteCustomer);
+    }
+
+    @Bean
+    public CustomerCreatedListener customerCreatedListener(Publisher publisher, NotificationProducer notificationProducer) {
+        return new CustomerCreatedListener(publisher, notificationProducer);
     }
 }

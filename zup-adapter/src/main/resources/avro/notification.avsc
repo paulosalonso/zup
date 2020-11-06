@@ -1,0 +1,43 @@
+{
+    "type": "record",
+    "name": "Notification",
+    "namespace": "com.github.paulosalonso.notifier.kafka.avro",
+    "fields": [
+        {
+            "name": "type",
+            "type": {
+                "name": "NotificationType",
+                "type": "enum",
+                "symbols": [
+                    "EMAIL"
+                ]
+            }
+        },
+        {
+            "name": "sender",
+            "type": "string"
+        },
+        {
+            "name": "recipients",
+            "type": {
+                "type": "array",
+                "items": "string"
+            }
+        },
+        {
+            "name": "subject",
+            "type": "string"
+        },
+        {
+            "name": "message",
+            "type": "string"
+        },
+        {
+            "name": "additionalProperties",
+            "type": {
+                "type": "map",
+                "values": "string"
+            }
+        }
+    ]
+}
