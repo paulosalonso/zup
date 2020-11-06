@@ -4,15 +4,17 @@ services:
   zup:
     image: paulosalonso/zup:3.1.0
     ports:
-      - 8080:8080
+      - 8070:8070
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/zup?useSSL=false&suseTimezone=true&serverTimezone=UTC
-      - SPRING_DATASOURCE_username=postgres
-      - SPRING_DATASOURCE_password=postgres
-      - SPRING_DATASOURCE_driver-class-name=org.postgresql.Driver
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      SERVER_PORT: 8070
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/zup?useSSL=false&suseTimezone=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
     depends_on:
       - postgres
+      - kafka
 
   notifier:
     image: paulosalonso/notifier:0.0.1
